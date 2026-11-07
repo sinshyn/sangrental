@@ -1,0 +1,748 @@
+<!DOCTYPE html><html lang="vi"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_tab" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container": "#ddf1ff", "on-secondary": "#ffffff", "inverse-surface": "#063448", "on-primary-container": "#fcfdff", "outline-variant": "#bec8ce", "surface-container-lowest": "#ffffff", "surface-tint": "#006686", "on-secondary-container": "#006f6a", "on-primary": "#ffffff", "surface-container-highest": "#c4e7ff", "surface-variant": "#c4e7ff", "surface": "#f5faff", "tertiary": "#70591c", "inverse-on-surface": "#e3f3ff", "surface-dim": "#b9dff8", "primary": "#006483", "on-tertiary": "#ffffff", "on-tertiary-container": "#fffbff", "primary-fixed": "#c0e8ff", "secondary-fixed": "#71f7ee", "surface-container-low": "#e9f5ff", "tertiary-fixed-dim": "#e2c37c", "error": "#ba1a1a", "outline": "#6f787e", "on-primary-fixed-variant": "#004d66", "background": "#f5faff", "primary-container": "#087ea4", "secondary-fixed-dim": "#50dad2", "on-surface-variant": "#3f484e", "inverse-primary": "#79d1fb", "on-error": "#ffffff", "surface-bright": "#f5faff", "on-secondary-fixed-variant": "#00504c", "surface-container-high": "#d1ecff", "tertiary-fixed": "#ffdf98", "error-container": "#ffdad6", "on-primary-fixed": "#001e2b", "secondary": "#006a65", "on-tertiary-fixed-variant": "#594407", "on-surface": "#001e2c", "on-tertiary-fixed": "#251a00", "on-background": "#001e2c", "primary-fixed-dim": "#79d1fb", "on-secondary-fixed": "#00201e", "tertiary-container": "#8b7133", "on-error-container": "#93000a", "secondary-container": "#6ef4eb" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "margin-desktop": "3rem", "space-md": "1rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "gutter-mobile": "1rem", "space-2xl": "4rem", "margin-mobile": "1rem", "gutter": "1.5rem", "margin": "2rem", "space-xl": "2.5rem", "space-lg": "1.5rem" }, "fontFamily": { "label-caps": ["Inter"], "body-md": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"], "title": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "display": ["Plus Jakarta Sans"], "display-mobile": ["Plus Jakarta Sans"], "headline-xl": ["Plus Jakarta Sans"], "price-lg": ["Plus Jakarta Sans"], "label-sm": ["Inter"], "headline-xl-mobile": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "label-md": ["Inter"], "headline-lg": ["Plus Jakarta Sans"] }, "fontSize": { "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.12em", "fontWeight": "700" }], "body-md": ["15px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "title": ["18px", { "lineHeight": "26px", "letterSpacing": "0em", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" }], "body-lg": ["17px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "400" }], "display": ["56px", { "lineHeight": "64px", "letterSpacing": "-0.025em", "fontWeight": "800" }], "display-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "price-lg": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "800" }], "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }], "headline-xl-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "0em", "fontWeight": "600" }], "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "700" }] } } } };</script></head><body class="bg-surface text-on-surface font-body-md text-body-md antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-gutter-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs"><div class="w-9 h-9 rounded-xl bg-primary-container flex items-center justify-center text-on-primary shadow-[0_4px_12px_-2px_rgba(8,126,164,0.3)]"><span class="material-symbols-outlined text-[22px]">tsunami</span></div><div class="flex flex-col"><span class="font-title text-title tracking-tight text-on-surface font-bold leading-none">Sang<span class="text-primary-container">Rental</span></span><span class="font-label-caps text-label-caps text-outline tracking-wider leading-none mt-0.5">ĐÀ NẴNG LUXURY</span></div></div><div class="flex items-center gap-space-xs"><a aria-label="Hotline 0905 123 456" class="h-11 px-space-xs flex items-center justify-center text-secondary gap-1 rounded-full bg-secondary-container/20" href="tel:0905123456"><span class="material-symbols-outlined text-[20px]">call</span><span class="font-label-sm text-label-sm font-semibold hidden min-[380px]:inline text-secondary">0905.123.456</span></a><div class="flex items-center justify-center h-11 px-space-xs bg-surface-container-high/60 rounded-full text-on-surface-variant font-label-sm text-label-sm font-semibold"><span class="mr-1">🇻🇳</span><span class="">VI</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><button aria-label="Menu điều hướng" class="w-11 h-11 flex items-center justify-center text-on-surface-variant rounded-full active:bg-surface-container"><span class="material-symbols-outlined text-[24px]">menu</span></button></div></div></header><main class="flex-1 w-full bg-surface pt-16 pb-24"><div class="flex flex-col w-full">
+<!-- 1. HERO SECTION -->
+<section class="relative w-full overflow-hidden bg-surface-container-low px-gutter-mobile pt-space-md pb-space-lg flex flex-col gap-space-md">
+<div class="inline-flex items-center gap-1.5 self-start px-space-sm py-1 rounded-full bg-surface-container-highest/80 backdrop-blur-md shadow-sm">
+<span class="material-symbols-outlined text-[16px] text-tertiary" style="font-variation-settings: &quot;FILL&quot; 1;">hotel_class</span>
+<span class="font-label-caps text-label-caps text-on-surface tracking-wider">ĐÀ NẴNG PREMIUM FLEET • 2024</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface tracking-tight font-extrabold leading-tight">
+        Khám phá Đà Nẵng <br>
+<span class="text-primary-container">theo cách của bạn</span>
+</h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        Thuê xe máy &amp; ô tô thuận tiện để tận hưởng hành trình tự do bên biển xanh, nắng vàng cùng dịch vụ chuẩn 5 sao.
+      </p>
+</div>
+<!-- Hero Image Card with Coastal Lighting -->
+<div class="relative w-full h-56 rounded-xl overflow-hidden shadow-md">
+<img class="w-full h-full object-cover" data-alt="Sunny tropical Da Nang My Khe coastal highway with scenic turquoise ocean, palm trees, blue sky, and pristine modern scooters parked along the seaside promenade with coastal luxury aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRPtDSHOB0HT7FMGP4ifTPrwrADhVosyyqSSNMqQijGvQ1g6xsdUedqEJ6kiv2IPM17DksXxziyE6k1JlDhaDjYN2MiCt8Ch1YZEEv30UnkOdbidPWyvSTL4Q0tJRB_tAahK1_26T-edp6P7vprYzTGPhP_qecct1pXLBNR49Q3qEPCY98Fb3jMSfVe0u_JTrazu7b8FVgvEgMSl9SE9ZAuNslAKE66eRCaVctjBU7">
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent flex flex-col justify-end p-space-sm">
+<span class="text-surface-bright font-title text-title font-bold">Tự do lướt gió miền di sản</span>
+<span class="text-surface-container font-body-sm text-body-sm">Đà Nẵng • Bán đảo Sơn Trà • Đèo Hải Vân • Hội An</span>
+</div>
+</div>
+<!-- Quick Badges Carousel -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 -mx-gutter-mobile px-gutter-mobile">
+<div class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-lg bg-surface-container-lowest shadow-sm shrink-0">
+<span class="material-symbols-outlined text-secondary text-[18px]">bolt</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Giao tận nơi 15p</span>
+</div>
+<div class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-lg bg-surface-container-lowest shadow-sm shrink-0">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">100% Xe mới 2024</span>
+</div>
+<div class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-lg bg-surface-container-lowest shadow-sm shrink-0">
+<span class="material-symbols-outlined text-tertiary text-[18px]">no_accounts</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Không giữ CCCD/Hộ chiếu</span>
+</div>
+</div>
+</section>
+<!-- 2. MOBILE QUICK BOOKING WIDGET -->
+<section class="px-gutter-mobile mb-space-lg relative z-10">
+<div class="w-full bg-surface-container-lowest rounded-xl shadow-lg p-space-md flex flex-col gap-space-md">
+<!-- Mode Tabs -->
+<div class="grid grid-cols-2 p-1 bg-surface-container-low rounded-lg gap-1">
+<button class="py-2 rounded-md font-label-md text-label-md font-bold flex items-center justify-center gap-1.5 bg-primary-container text-on-primary shadow-sm transition-all" id="tab-moto" onclick="switchBookingTab('moto')">
+<span class="material-symbols-outlined text-[18px]">two_wheeler</span>
+<span class="">Thuê Xe Máy</span>
+</button>
+<button class="py-2 rounded-md font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-on-surface transition-all" id="tab-car" onclick="switchBookingTab('car')">
+<span class="material-symbols-outlined text-[18px]">directions_car</span>
+<span class="">Ô Tô Du Lịch</span>
+</button>
+</div>
+<!-- Booking Form Fields -->
+<div class="flex flex-col gap-space-sm">
+<!-- Vehicle Type Selector -->
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-outline font-medium">Loại phương tiện mong muốn</label>
+<div class="flex items-center gap-2 px-space-sm h-12 rounded-lg bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-primary text-[20px]">moped</span>
+<select class="w-full bg-transparent font-body-md text-body-md text-on-surface focus:outline-none" id="vehicle-type-select">
+<option value="scooter">Xe tay ga đô thị (Air Blade, Vision, Lead)</option>
+<option value="gear">Xe số cơ động (Wave Alpha, Sirius Fi)</option>
+<option value="clutch">Xe côn tay phượt (Winner X, Exciter)</option>
+<option value="car4">Ô tô 4 chỗ (Vios, Accent, Mazda 3)</option>
+<option value="car7">Ô tô 7 chỗ (Xpander, Santa Fe)</option>
+<option value="van16">Xe 16 chỗ du lịch có tài (Solati, Transit)</option>
+</select>
+</div>
+</div>
+<!-- Pick-up Location -->
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-outline font-medium">Điểm nhận &amp; trả xe tại Đà Nẵng</label>
+<div class="flex items-center gap-2 px-space-sm h-12 rounded-lg bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[20px]">location_on</span>
+<select class="w-full bg-transparent font-body-md text-body-md text-on-surface focus:outline-none">
+<option>Sân bay Đà Nẵng (Ga Quốc Nội T1 / Quốc Tế T2)</option>
+<option>Khách sạn ven biển Mỹ Khê (Võ Nguyên Giáp)</option>
+<option>Ga tàu hỏa Đà Nẵng (Hải Phòng)</option>
+<option>Trung tâm Hải Châu / Sông Hàn</option>
+<option>Giao tận nơi Resort Ngũ Hành Sơn / Hội An</option>
+</select>
+</div>
+</div>
+<!-- Date & Time Grid -->
+<div class="grid grid-cols-2 gap-space-xs">
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-outline font-medium">Ngày nhận</label>
+<div class="flex items-center gap-1.5 px-space-sm h-12 rounded-lg bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">calendar_today</span>
+<input class="w-full bg-transparent font-label-md text-label-md text-on-surface focus:outline-none" type="text" value="Hôm nay, 08:30">
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-outline font-medium">Ngày trả</label>
+<div class="flex items-center gap-1.5 px-space-sm h-12 rounded-lg bg-surface-container-low text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">event_repeat</span>
+<input class="w-full bg-transparent font-label-md text-label-md text-on-surface focus:outline-none" type="text" value="Sau 2 ngày, 18:00">
+</div>
+</div>
+</div>
+</div>
+<!-- Search CTA -->
+<button class="w-full h-12 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-bold flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined text-[20px]">search</span>
+<span class="">Tìm xe có sẵn ngay</span>
+</button>
+<!-- Live Availability Micro-indicator -->
+<div class="flex items-start gap-2 p-space-xs rounded-lg bg-secondary-container/30 text-on-secondary-container">
+<span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">check_circle</span>
+<span class="font-body-sm text-body-sm leading-snug">
+<strong>Bao giá minh bạch:</strong> Kèm 2 mũ bảo hiểm chuẩn, 2 áo mưa &amp; giá kẹp điện thoại. Hiện có <strong>42 xe sẵn sàng</strong> tại Sân bay Đà Nẵng.
+        </span>
+</div>
+</div>
+</section>
+<!-- 3. VEHICLE CATEGORIES (2-Column touch cards) -->
+<section class="px-gutter-mobile mb-space-xl flex flex-col gap-space-md">
+<div class="flex items-end justify-between">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-primary font-bold">DANH MỤC XE SẴN SÀNG</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-bold">Lựa chọn phương tiện</h2>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Đời 2023 - 2024</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Xe Số -->
+<div class="flex flex-col p-space-sm rounded-xl bg-surface-container-lowest shadow-sm gap-2">
+<div class="h-24 w-full rounded-lg overflow-hidden bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="Crisp modern Honda Wave Alpha red and black motorbike studio shot for rental in Da Nang" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHjTD4oisXEsx2oVaP8J82zXSYIxBzxaG2SuPgXxi2wIwABNmV6dFedFGq9N3iB3xAF1drGRtq-E76ghZYB0QVHypq063EPiwSRrxF-vN75dVsv6kTwcSP-5mXnBB8pmpAhQ1vvjbnUuPLd4Telj3IKRMnuAb1a-csEP9j7v82iMXRYs2lovYhfogB0_-b6vQYpaCN5cV8OZ5V9TpGHwiCvf4XWTU16JpEX3yrK4Kr">
+</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Xe số cơ động</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Wave Alpha, Sirius Fi</span>
+<span class="font-price-lg text-price-lg text-primary font-extrabold mt-1">100.000₫<span class="font-body-sm text-body-sm text-outline font-normal">/ngày</span></span>
+</div>
+<div class="flex flex-col gap-1 pt-1 mt-auto"><button class="w-full h-9 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform" onclick="triggerQuickBook('Xe số cơ động')"><span class="material-symbols-outlined text-[16px]">electric_bolt</span><span class="">Đặt xe</span></button><a class="w-full h-8 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container" href="tel:0905123456"><span class="material-symbols-outlined text-[16px]">chat</span><span class="">Tư vấn</span></a></div></div>
+<!-- Xe Tay Ga -->
+<div class="relative flex flex-col p-space-sm rounded-xl bg-surface-container-lowest shadow-sm gap-2">
+<div class="absolute top-2 right-2 px-1.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-caps text-label-caps">
+          HOT NHẤT
+        </div>
+<div class="h-24 w-full rounded-lg overflow-hidden bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="Modern stylish Honda Air Blade scooter white metallic color in beach setting Da Nang" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe57d_Ih9hG8Bp2dylwf9xF9HQG-Dun-4aiadc5-xL64fvSg1NyiNnzq9m8WLjVkzBUxFBBDIg3fu7XdhLK7xeEfERLeg678k9_yBSvp_RoDM9N_QARnlLkh_Sm3Qm8lshDwH0BN0kdoKwQmcRGliWpNAxr79qRXVkje1Qvcn-dHQxoKrBcjELPE2WPLcijC79wLaeRXkkZmQEWMfMTXBlecTrs6DINt3CSxhFjpgQ">
+</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Xe tay ga đô thị</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Air Blade, Lead, Vision</span>
+<span class="font-price-lg text-price-lg text-primary font-extrabold mt-1">130.000₫<span class="font-body-sm text-body-sm text-outline font-normal">/ngày</span></span>
+</div>
+<div class="flex flex-col gap-1 pt-1 mt-auto"><button class="w-full h-9 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform" onclick="triggerQuickBook('Xe tay ga đô thị')"><span class="material-symbols-outlined text-[16px]">electric_bolt</span><span class="">Đặt xe</span></button><a class="w-full h-8 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container" href="tel:0905123456"><span class="material-symbols-outlined text-[16px]">chat</span><span class="">Tư vấn</span></a></div></div>
+<!-- Xe Côn Tay -->
+<div class="flex flex-col p-space-sm rounded-xl bg-surface-container-lowest shadow-sm gap-2">
+<div class="h-24 w-full rounded-lg overflow-hidden bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="Sporty Honda Winner X motorbike ready for Hai Van pass coastal riding Da Nang" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt4YOSGEKizZS4W1PKL-CyRGzZfalo8E24r7YcgbfvXhMomqfZbUIjYGqXZwztrGrKxYKX9dmFgndr95E37TeG0xQ-aBhevBdUCHAno_Tnzn-1WBThlYbYp6ilj2hunr46_RGGGR98zoKqYCjpa7T27u1DcF1yWHqe2ptJAzi0Tn_6m-v7f0neDQhzEjyJ66NhanQrmWTag4rN44vF0C41e374fqZRYYRkrJjfHn1t">
+</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Xe côn thể thao</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Winner X, Exciter 155</span>
+<span class="font-price-lg text-price-lg text-primary font-extrabold mt-1">220.000₫<span class="font-body-sm text-body-sm text-outline font-normal">/ngày</span></span>
+</div>
+<div class="flex flex-col gap-1 pt-1 mt-auto"><button class="w-full h-9 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform" onclick="triggerQuickBook('Xe côn thể thao')"><span class="material-symbols-outlined text-[16px]">electric_bolt</span><span class="">Đặt xe</span></button><a class="w-full h-8 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container" href="tel:0905123456"><span class="material-symbols-outlined text-[16px]">chat</span><span class="">Tư vấn</span></a></div></div>
+<!-- Ô tô 4 Chỗ -->
+<div class="flex flex-col p-space-sm rounded-xl bg-surface-container-lowest shadow-sm gap-2">
+<div class="h-24 w-full rounded-lg overflow-hidden bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="White modern Hyundai Accent sedan car parked near Da Nang Dragon Bridge sunny day" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUojnKWF-cHg9CwcOP1veWCDw2s9ZgIFVJWfRhPNrDQ3oAfKxchGeq-W6xA27iZLQDMIuZcThtwi9NeRijiVoY3k9_B82OgGc0p7eIRmRDQ-E_TKomK_eYKRLR9cIl6OwiznMpwRBKD0TRKJTzp8QmZuG6RiPgKihjLgmq-X6eZAtUSlzR00P1Ximz9H2ZQjg8GyDCgtHK86P0oaH7Ntp0vrZcPu144rjrUFIsVuCE">
+</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Ô tô sedan 4 chỗ</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Accent, Vios, Mazda 3</span>
+<span class="font-price-lg text-price-lg text-primary font-extrabold mt-1">650.000₫<span class="font-body-sm text-body-sm text-outline font-normal">/ngày</span></span>
+</div>
+<div class="flex flex-col gap-1 pt-1 mt-auto"><button class="w-full h-9 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform" onclick="triggerQuickBook('Ô tô sedan 4 chỗ')"><span class="material-symbols-outlined text-[16px]">electric_bolt</span><span class="">Đặt xe</span></button><a class="w-full h-8 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container" href="tel:0905123456"><span class="material-symbols-outlined text-[16px]">chat</span><span class="">Tư vấn</span></a></div></div>
+<!-- Ô tô 7 Chỗ -->
+<div class="flex flex-col p-space-sm rounded-xl bg-surface-container-lowest shadow-sm gap-2">
+<div class="h-24 w-full rounded-lg overflow-hidden bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="Mitsubishi Xpander 7 seater premium family MPV car coastal road resort in Da Nang" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQMh20KBpc5k7gjPsujMHyWOJayapuR2zCXVeu5P269B0SFylm9yJSAhF2iKK1M5gCjyPvomvSAyEwJgL-XdXqdCmi2kPgTRS5ZxRAfVOEHnhDME0ndo0zWPSH8RqJEIR1xTnOtX2V36PyQTBGsGLaKvkMICaLRMSf80qh1KvisBtos7M-eEb_UM6MxNWnEZV_am4QHXvJXbJhr_LoPDw8SXr-7EUCP0PVrGr9iiP3">
+</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Ô tô SUV 7 chỗ</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Xpander, Santa Fe</span>
+<span class="font-price-lg text-price-lg text-primary font-extrabold mt-1">850.000₫<span class="font-body-sm text-body-sm text-outline font-normal">/ngày</span></span>
+</div>
+<div class="flex flex-col gap-1 pt-1 mt-auto"><button class="w-full h-9 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform" onclick="triggerQuickBook('Ô tô SUV 7 chỗ')"><span class="material-symbols-outlined text-[16px]">electric_bolt</span><span class="">Đặt xe</span></button><a class="w-full h-8 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container" href="tel:0905123456"><span class="material-symbols-outlined text-[16px]">chat</span><span class="">Tư vấn</span></a></div></div>
+<!-- Ô tô 16 Chỗ có tài -->
+<div class="flex flex-col p-space-sm rounded-xl bg-surface-container-lowest shadow-sm gap-2">
+<div class="h-24 w-full rounded-lg overflow-hidden bg-surface-container-low">
+<img class="w-full h-full object-cover" data-alt="Luxury Hyundai Solati 16 seat passenger tourist van with private driver in Da Nang Vietnam" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCCHIXMM0STEuHEyxYVRJ-3JII9_YCb27xyP936ceifPL7yFyqK3Vvzs-yhQ_Tfk_I6V_5u91VfQ5yA6GWUfWaJ5U1_6aJe9g-uHlv3_H4RkcXNIJ3RGQm35DvJJTTxoRtYUwJifCAjcEfs6dBC5Qsf1pMXlgYEviGIRGcjt3FDl0qte37FEDHIlK4N4BKX6ih8uozzYeejXM6hx17484F6OV-cHn5EAqME5crZOS3">
+</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Xe 16 chỗ du lịch</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Transit, Solati (Có tài)</span>
+<span class="font-price-lg text-price-lg text-primary font-extrabold mt-1">1.200.000₫<span class="font-body-sm text-body-sm text-outline font-normal">/ngày</span></span>
+</div>
+<div class="flex flex-col gap-1 pt-1 mt-auto"><button class="w-full h-9 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform" onclick="triggerQuickBook('Xe 16 chỗ du lịch')"><span class="material-symbols-outlined text-[16px]">electric_bolt</span><span class="">Đặt xe</span></button><a class="w-full h-8 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container" href="tel:0905123456"><span class="material-symbols-outlined text-[16px]">chat</span><span class="">Tư vấn</span></a></div></div>
+</div>
+</section>
+<!-- 4. FEATURED POPULAR FLEET -->
+<section class="px-gutter-mobile mb-space-xl flex flex-col gap-space-md">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-secondary font-bold">ĐỘI XE NỔI BẬT</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-bold">Được du khách yêu thích nhất</h2>
+</div>
+<!-- Filter chips -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 -mx-gutter-mobile px-gutter-mobile">
+<button class="px-space-md py-1.5 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm font-bold shrink-0">Tất cả xe</button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm shrink-0">Xe tay ga du lịch</button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm shrink-0">Xe số tiết kiệm</button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm shrink-0">Ô tô du lịch biển</button>
+</div>
+<!-- Cards list -->
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Card 1: Air Blade 160 ABS -->
+<div class="flex flex-col rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden">
+  <div class="relative h-28 w-full bg-surface-container-low">
+    <img class="w-full h-full object-cover" data-alt="Honda Air Blade 160 ABS new model 2024 matte grey parked by blue sea in Da Nang coastal luxury vibe" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD67gNpsisuqEPzVYCVPDSA6A-qch9Nml1BxuP2imvk0hupUMmfU1wtccTuU8Px5HN5ccwUzXK6WUc9Gg6zLkjx8OqxJTMn2e7gcqq9EQy-8OimXlvtmfmjh0aIyqvaAe9-GUsRSxJGhuh2-HpXa3WTbVZBmewd1Y3s7Sj5VSKXS7CXKBFmr77oGUAD3A2_TiCi0dd54kD8pESHf3JhMfbxVL8QwQcQU-50UGKc7_vz">
+    <div class="absolute top-1.5 left-1.5 flex flex-wrap gap-1">
+      <span class="px-1.5 py-0.5 rounded bg-secondary text-on-secondary font-label-caps text-label-caps leading-none">Giao 0đ</span>
+      <span class="px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-caps text-label-caps leading-none">ABS</span>
+    </div>
+  </div>
+  <div class="p-space-xs flex flex-col flex-1 justify-between gap-1.5">
+    <div class="flex flex-col gap-0.5">
+      <span class="font-title text-title text-on-surface font-bold text-[16px] leading-snug line-clamp-1">Air Blade 160cc</span>
+      <span class="font-body-sm text-body-sm text-outline text-[12px] leading-tight line-clamp-1">Smartkey • Phanh ABS</span>
+      <div class="flex items-baseline gap-1 mt-0.5">
+        <span class="font-price-lg text-price-lg text-primary font-extrabold text-[18px]">160k</span>
+        <span class="font-body-sm text-body-sm text-outline text-[12px]">/ngày</span>
+      </div>
+    </div>
+    <div class="flex flex-col gap-1 pt-1">
+      <button class="w-full h-9 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform" onclick="triggerQuickBook('Honda Air Blade 160cc ABS')">
+        <span class="material-symbols-outlined text-[16px]">electric_bolt</span>
+        <span class="">Đặt xe</span>
+      </button>
+      <a class="w-full h-8 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container" href="tel:0905123456">
+        <span class="material-symbols-outlined text-[16px]">chat</span>
+        <span class="">Tư vấn</span>
+      </a>
+    </div>
+  </div>
+</div>
+<!-- Card 2: Honda Vision 110 Smartkey -->
+<div class="flex flex-col rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden">
+  <div class="relative h-28 w-full bg-surface-container-low">
+    <img class="w-full h-full object-cover" data-alt="Honda Vision modern light blue smartkey scooter on beach promenade Son Tra Da Nang" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAzu4W6mQPy_Y6q5KpHBZKvJVdjxMe_n6uL2PBGvqvBjgcPcRZp_mk79nM-BAfloddYx78yu4tdPAW_ZbjGd5Q6L89q0Qof0RLv_0wRfyg61QcdN_V1oTbrprAXQ7vDofaqhkt50Eg-PlUWrjePjMSUSF7wP21_cEzZOMEyikx8K7l55jH4B8SpSqwTlrm_Iqt-IF4UHl4fhDu5nIV0wd8MYKEyoojyj1XXB476Pqz">
+    <div class="absolute top-1.5 left-1.5 flex flex-wrap gap-1">
+      <span class="px-1.5 py-0.5 rounded bg-secondary text-on-secondary font-label-caps text-label-caps leading-none">15 phút</span>
+      <span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface font-label-caps text-label-caps leading-none">Tiết kiệm</span>
+    </div>
+  </div>
+  <div class="p-space-xs flex flex-col flex-1 justify-between gap-1.5">
+    <div class="flex flex-col gap-0.5">
+      <span class="font-title text-title text-on-surface font-bold text-[16px] leading-snug line-clamp-1">Vision 110cc</span>
+      <span class="font-body-sm text-body-sm text-outline text-[12px] leading-tight line-clamp-1">Smartkey • Dạo biển</span>
+      <div class="flex items-baseline gap-1 mt-0.5">
+        <span class="font-price-lg text-price-lg text-primary font-extrabold text-[18px]">130k</span>
+        <span class="font-body-sm text-body-sm text-outline text-[12px]">/ngày</span>
+      </div>
+    </div>
+    <div class="flex flex-col gap-1 pt-1">
+      <button class="w-full h-9 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform" onclick="triggerQuickBook('Honda Vision 110cc Smartkey')">
+        <span class="material-symbols-outlined text-[16px]">electric_bolt</span>
+        <span class="">Đặt xe</span>
+      </button>
+      <a class="w-full h-8 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container" href="tel:0905123456">
+        <span class="material-symbols-outlined text-[16px]">chat</span>
+        <span class="">Tư vấn</span>
+      </a>
+    </div>
+  </div>
+</div>
+<!-- Card 3: Mitsubishi Xpander Premium -->
+<div class="flex flex-col rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden">
+  <div class="relative h-28 w-full bg-surface-container-low">
+    <img class="w-full h-full object-cover" data-alt="Mitsubishi Xpander white 7-seater SUV modern car at luxury resort in Da Nang coastal road" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0u1-reXZuiDBQ_wy448-_z_uwjeSzNLQyebosXF0d8OF35p7k4G9tgPQPfAkq816D2gqQehfrZ30y61RV7lcuWvg3vrb38KzuUdG5sO8VbmPsD5z4_xftgwNkxeb-i1zUWXxvd6CO2n0a84MskyOAKEJEMZmqya16diWhIelqrz0fM9_tcdz6wT10VCLP3rBJPdEByQDSd360oTyJakYApSVU0GLnrxmx8GgI-G-b">
+    <div class="absolute top-1.5 left-1.5 flex flex-wrap gap-1">
+      <span class="px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-caps text-label-caps leading-none">7 Chỗ</span>
+      <span class="px-1.5 py-0.5 rounded bg-secondary text-on-secondary font-label-caps text-label-caps leading-none">Tự lái</span>
+    </div>
+  </div>
+  <div class="p-space-xs flex flex-col flex-1 justify-between gap-1.5">
+    <div class="flex flex-col gap-0.5">
+      <span class="font-title text-title text-on-surface font-bold text-[16px] leading-snug line-clamp-1">Xpander 7 Chỗ</span>
+      <span class="font-body-sm text-body-sm text-outline text-[12px] leading-tight line-clamp-1">Số tự động • 2 giàn lạnh</span>
+      <div class="flex items-baseline gap-1 mt-0.5">
+        <span class="font-price-lg text-price-lg text-primary font-extrabold text-[18px]">850k</span>
+        <span class="font-body-sm text-body-sm text-outline text-[12px]">/ngày</span>
+      </div>
+    </div>
+    <div class="flex flex-col gap-1 pt-1">
+      <button class="w-full h-9 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform" onclick="triggerQuickBook('Mitsubishi Xpander Premium')">
+        <span class="material-symbols-outlined text-[16px]">electric_bolt</span>
+        <span class="">Đặt xe</span>
+      </button>
+      <a class="w-full h-8 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container" href="tel:0905123456">
+        <span class="material-symbols-outlined text-[16px]">chat</span>
+        <span class="">Tư vấn</span>
+      </a>
+    </div>
+  </div>
+</div>
+<!-- Card 4: Honda Wave Alpha -->
+<div class="flex flex-col rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden">
+  <div class="relative h-28 w-full bg-surface-container-low">
+    <img class="w-full h-full object-cover" data-alt="Honda Wave Alpha 110cc blue motorbike parked at scenic view Hai Van Pass overlooking Da Nang Bay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzgNHQZHZgwm2D77Su3T1FQJU5b4Ptlv-7SwOrw7kElspih8wF5GliQARaQlbtagurQny0PIj5vDQHBwlstu15kP93tUqLLLH1sA1tEZAo11MUghJVma5FaD8HaOqGHKu6uL97iUumEsOicNLjyvRwSWu1zXKI1XXEwNgJtvZEGUk4GwT-HxSVYXjJncDxIctR76BlTGJSygRc953kOCFGeeG-lo8mPC6tw6Cf57pP">
+    <div class="absolute top-1.5 left-1.5 flex flex-wrap gap-1">
+      <span class="px-1.5 py-0.5 rounded bg-primary-container text-on-primary font-label-caps text-label-caps leading-none">Khỏe</span>
+      <span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface font-label-caps text-label-caps leading-none">Kinh tế</span>
+    </div>
+  </div>
+  <div class="p-space-xs flex flex-col flex-1 justify-between gap-1.5">
+    <div class="flex flex-col gap-0.5">
+      <span class="font-title text-title text-on-surface font-bold text-[16px] leading-snug line-clamp-1">Wave Alpha 110</span>
+      <span class="font-body-sm text-body-sm text-outline text-[12px] leading-tight line-clamp-1">1.6L/100km • Phượt đèo</span>
+      <div class="flex items-baseline gap-1 mt-0.5">
+        <span class="font-price-lg text-price-lg text-primary font-extrabold text-[18px]">100k</span>
+        <span class="font-body-sm text-body-sm text-outline text-[12px]">/ngày</span>
+      </div>
+    </div>
+    <div class="flex flex-col gap-1 pt-1">
+      <button class="w-full h-9 rounded-lg bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 shadow-sm active:scale-95 transition-transform" onclick="triggerQuickBook('Honda Wave Alpha 110cc')">
+        <span class="material-symbols-outlined text-[16px]">electric_bolt</span>
+        <span class="">Đặt xe</span>
+      </button>
+      <a class="w-full h-8 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 active:bg-surface-container" href="tel:0905123456">
+        <span class="material-symbols-outlined text-[16px]">chat</span>
+        <span class="">Tư vấn</span>
+      </a>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+<!-- 5. VALUE PROPOSITION & CONCIERGE PROMISES -->
+<section class="px-gutter-mobile mb-space-xl flex flex-col gap-space-md">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-primary font-bold">CHUẨN MỰC DỊCH VỤ 5 SAO</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-bold leading-tight">Tại sao 15.000+ du khách tin chọn SangRental?</h2>
+</div>
+<div class="grid grid-cols-1 gap-space-sm">
+<!-- Benefit 1 -->
+<div class="flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">electric_moped</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Giao tận nơi đúng hẹn 15 phút</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Nhận xe ngay tại Sân bay Đà Nẵng (cột chờ T1/T2), khách sạn ven biển Mỹ Khê hoặc bất kỳ điểm hẹn nào trong nội thành.
+          </p>
+</div>
+</div>
+<!-- Benefit 2 -->
+<div class="flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">verified_user</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">100% Xe mới &amp; bảo dưỡng định kỳ</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Kiểm tra áp suất lốp, phanh an toàn, dầu nhớt trước mỗi lần giao. Đảm bảo chạy êm ru vượt đèo Hải Vân và dạo phố cổ Hội An.
+          </p>
+</div>
+</div>
+<!-- Benefit 3 -->
+<div class="flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high text-tertiary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">badge</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Thủ tục 3 phút - Không giữ CCCD gốc</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Chỉ cần chụp ảnh CCCD hoặc Passport đối chiếu. Bạn tự giữ bản gốc để check-in khách sạn và lên máy bay thuận tiện.
+          </p>
+</div>
+</div>
+<!-- Benefit 4 -->
+<div class="flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high text-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[24px]">sports_motorsports</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Trọn bộ phụ kiện đi biển miễn phí</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Trang bị sẵn 2 mũ bảo hiểm kính chắn gió sạch sẽ thơm tho, 2 áo mưa dự phòng, giá đỡ kẹp điện thoại xem bản đồ hành trình.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. TRAVEL INSPIRATION (Cẩm nang cung đường biển đẹp nhất) -->
+<section class="px-gutter-mobile mb-space-xl flex flex-col gap-space-md">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-secondary font-bold">GỢI Ý HÀNH TRÌNH</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-bold">Những cung đường tuyệt mỹ</h2>
+</div>
+<div class="flex items-stretch gap-space-sm overflow-x-auto pb-2 -mx-gutter-mobile px-gutter-mobile">
+<!-- Route 1 -->
+<div class="w-64 shrink-0 rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden flex flex-col">
+<div class="h-32 w-full">
+<img class="w-full h-full object-cover" data-alt="Hai Van Pass coastal serpentine mountain road overlooking turquoise blue sea Da Nang sunny day" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDCJDED8EQyPg9QiZPb_TtZnr9ySqvkC76NBKwSuqtDbpBCJ1sKKWOim1EfGVc3ngDqzhnLqiIJXpoXmS2BTJv080nHsyefKrlOzTZhD5QCEv0mb5TdldEpxL3RL5mY9RspoWiFGRF114Xot8WdXju5IfQDAi4xM5uqp_g2sPMsFTNKAyq3wuPr3GHst8pCQWDx68Far_HzigBFK_J3BFwoAPmpqH3NlzkTsA7KLci">
+</div>
+<div class="p-space-sm flex flex-col gap-1">
+<span class="font-title text-title text-on-surface font-bold">Đèo Hải Vân hùng quan</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Khoảng cách: 25km • Thích hợp xe côn &amp; tay ga</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Chiêm ngưỡng vịnh Lăng Cô và toàn cảnh Đà Nẵng từ trên cao mây phủ.</p>
+</div>
+</div>
+<!-- Route 2 -->
+<div class="w-64 shrink-0 rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden flex flex-col">
+<div class="h-32 w-full">
+<img class="w-full h-full object-cover" data-alt="Son Tra Peninsula coastal curving road with lush jungle green trees and giant Lady Buddha statue Linh Ung pagoda Da Nang" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOT9vz3sYkgZ3QaM024lPQwNlVlqEHFmBWsPzNMcIBne9uJbQg08nJUTeGFNtiPwT0sZUhnqvXcwYz6SyJRcguBa3kBzJIQoeuFWNlK0PtfnMTAtd7bQP2qJMwRW7kl5hSv6cU0LPSeJ8Xgty2a-zYutS9W-WkbhBpLcLBUlzx01HrY5VfdhknzVnsPTIW9pqdEWmSoWLsQa8gHw_ZLFAI0-vSaFBwasVw1ZkQw8hj">
+</div>
+<div class="p-space-sm flex flex-col gap-1">
+<span class="font-title text-title text-on-surface font-bold">Bán Đảo Sơn Trà &amp; Linh Ứng</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Khoảng cách: 15km • Thích hợp mọi dòng xe</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Thăm chùa Linh Ứng, đỉnh Bàn Cờ và ngắm nhìn loài voọc chà vá chân nâu quý hiếm.</p>
+</div>
+</div>
+<!-- Route 3 -->
+<div class="w-64 shrink-0 rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden flex flex-col">
+<div class="h-32 w-full">
+<img class="w-full h-full object-cover" data-alt="Scenic straight road connecting Da Nang and Hoi An Ancient town flanked by coconut palms and resorts" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDcRF5wltSjhrewg0lDEmfSk0Zj3CHMtt3D48gIYUFg1NJizi2-XSRg8LhmXCbK_DL75T6p2SLopm26rh_6i4V8FxLiT96NqszSizdYYAOsblsPqlT3KGrJ6jcqRbHBDaFHCAPI4hatKhNMtSIVBgOyqt1Fycs4rVfBf6rcy84kiVwtQzq9JPVopveniH1h9ll64GkvnxMnFVVy1hA96m8Ibdg7On8bsyMssrZx449">
+</div>
+<div class="p-space-sm flex flex-col gap-1">
+<span class="font-title text-title text-on-surface font-bold">Đà Nẵng đi Phố Cổ Hội An</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Khoảng cách: 28km • Đường ven biển êm đềm</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Cung đường Võ Nguyên Giáp - Lạc Long Quân thẳng tắp ngắm hàng dừa và hoàng hôn.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. RENTAL PRICING POLICY & FAQ -->
+<section class="px-gutter-mobile mb-space-xl flex flex-col gap-space-md">
+<!-- Long-term discount banner -->
+<div class="p-space-md rounded-xl bg-surface-container-high flex flex-col gap-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[24px]">savings</span>
+<h3 class="font-title text-title text-on-surface font-bold">Chính sách ưu đãi thuê dài ngày</h3>
+</div>
+<div class="grid grid-cols-3 gap-2 text-center">
+<div class="p-2 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">1 - 2 Ngày</span>
+<span class="font-label-md text-label-md text-on-surface font-bold mt-1">Giá gốc</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">3 - 5 Ngày</span>
+<span class="font-label-md text-label-md text-secondary font-bold mt-1">Giảm 10%</span>
+</div>
+<div class="p-2 rounded-lg bg-surface-container-lowest shadow-sm flex flex-col">
+<span class="font-label-sm text-label-sm text-primary font-semibold">Từ 6 ngày+</span>
+<span class="font-label-md text-label-md text-primary font-bold mt-1">Giảm 15 - 20%</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="material-symbols-outlined text-secondary text-[20px]">support_agent</span>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">Hỗ trợ cứu hộ sự cố 24/7 trong vòng 20 phút toàn thành phố.</span>
+</div>
+</div>
+<!-- FAQ Accordion -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps text-primary font-bold">CÂU HỎI THƯỜNG GẶP</span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-bold">Giải đáp nhanh thắc mắc</h2>
+<div class="flex flex-col gap-2 mt-2">
+<!-- FAQ 1 -->
+<details class="group bg-surface-container-lowest rounded-xl p-space-sm shadow-sm">
+<summary class="flex justify-between items-center font-title text-title text-on-surface font-bold cursor-pointer list-none">
+<span class="">Thủ tục thuê xe cần những gì?</span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform text-outline">expand_more</span>
+</summary>
+<div class="mt-2 font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Bạn chỉ cần xuất trình CCCD hoặc Passport và Bằng lái xe (GPLX). SangRental chỉ chụp ảnh đối chiếu, không giữ giấy tờ gốc để bạn thoải mái mang theo làm thủ tục bay và khách sạn.
+          </div>
+</details>
+<!-- FAQ 2 -->
+<details class="group bg-surface-container-lowest rounded-xl p-space-sm shadow-sm">
+<summary class="flex justify-between items-center font-title text-title text-on-surface font-bold cursor-pointer list-none">
+<span class="">Địa điểm giao &amp; trả xe như thế nào?</span>
+<summary class="hidden"></summary>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform text-outline">expand_more</span>
+</summary>
+<div class="mt-2 font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            SangRental giao nhận xe miễn phí tận nơi tại Sân bay Đà Nẵng (Ga T1/T2), Ga xe lửa, khách sạn ven biển Mỹ Khê và khu vực trung tâm Hải Châu. Có thể nhận xe ở Đà Nẵng và trả tại phố cổ Hội An (có phụ phí điều phối nhỏ).
+          </div>
+</details>
+<!-- FAQ 3 -->
+<details class="group bg-surface-container-lowest rounded-xl p-space-sm shadow-sm">
+<summary class="flex justify-between items-center font-title text-title text-on-surface font-bold cursor-pointer list-none">
+<span class="">Có được kiểm tra xe trước khi nhận không?</span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform text-outline">expand_more</span>
+</summary>
+<div class="mt-2 font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Tuyệt đối được. Nhân viên giao xe sẽ cùng bạn kiểm tra phanh, đèn, lốp, quay video tình trạng xe và hỗ trợ hướng dẫn cung đường du lịch Đà Nẵng chu đáo nhất trước khi bạn ký biên bản.
+          </div>
+</details>
+</div>
+</div>
+</section>
+<!-- 8. GOOGLE MAPS & 5 REALISTIC REVIEWS -->
+<section class="px-gutter-mobile mb-space-xl flex flex-col gap-space-md">
+<!-- Google Rating Header Card -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-md flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-1">
+<span class="font-headline-md text-headline-md text-on-surface font-extrabold">4.9</span>
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Dựa trên 1.248+ đánh giá xác thực</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-high text-on-surface">
+<span class="font-label-md text-label-md font-bold">Google</span>
+<span class="material-symbols-outlined text-primary text-[20px]">verified</span>
+</div>
+</div>
+<!-- Map View -->
+<div class="flex flex-col rounded-xl overflow-hidden shadow-md bg-surface-container-lowest">
+<div class="w-full h-44 bg-cover bg-center" data-location="Da Nang International Airport, Da Nang, Vietnam"></div>
+<div class="p-space-md flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-title text-title text-on-surface font-bold">Trạm giao xe SangRental Đà Nẵng</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-caps text-label-caps">MỞ CỬA 24/7</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Trạm 1: Cổng Ga T1 Quốc Nội Sân Bay Đà Nẵng • Trạm 2: 124 Võ Nguyên Giáp, Mỹ Khê</span>
+<div class="grid grid-cols-2 gap-space-xs mt-2">
+<a class="h-10 rounded-lg bg-surface-container-high text-primary font-label-md text-label-md font-bold flex items-center justify-center gap-1" href="https://maps.google.com" target="_blank">
+<span class="material-symbols-outlined text-[18px]">directions</span>
+<span class="">Chỉ đường</span>
+</a>
+<a class="h-10 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-bold flex items-center justify-center gap-1 shadow-sm" href="tel:0905123456">
+<span class="material-symbols-outlined text-[18px]">call</span>
+<span class="">Gọi điều phối</span>
+</a>
+</div>
+</div>
+</div>
+<!-- 5 Realistic Google Reviews -->
+<div class="flex flex-col gap-space-sm">
+<span class="font-label-caps text-label-caps text-primary font-bold">TRẢI NGHIỆM THỰC TẾ KHÁCH HÀNG</span>
+<!-- Review 1 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-9 h-9 rounded-full bg-primary-container text-on-primary font-bold flex items-center justify-center font-label-md text-label-md">N</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Nguyễn Hoàng Nam</span>
+<span class="font-label-sm text-label-sm text-outline">Local Guide • 24 bài đánh giá</span>
+</div>
+</div>
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          "Mình thuê Air Blade 160 giao ngay tại ga đến T1 sân bay. Vừa hạ cánh là bạn nhân viên đã đứng chờ sẵn. Xe mới tinh, mũ bảo hiểm thơm tho có kính chắn bụi. Đi vòng Sơn Trà rồi chạy thẳng vào Hội An máy cực bốc. Rất hài lòng!"
+        </p>
+<span class="font-label-sm text-label-sm text-outline">Đã thuê: Air Blade 160 ABS • Tháng 5/2024</span>
+</div>
+<!-- Review 2 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-9 h-9 rounded-full bg-secondary text-on-secondary font-bold flex items-center justify-center font-label-md text-label-md">S</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Sarah Jenkins</span>
+<span class="font-label-sm text-label-sm text-outline">Du khách Úc (Australia)</span>
+</div>
+</div>
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          "Rented a 7-seater Xpander for our family trip to Ba Na Hills and Hoi An. The car was spotless, super reliable air conditioning, and no passport retention required. English communication on WhatsApp was swift and polite."
+        </p>
+<span class="font-label-sm text-label-sm text-outline">Đã thuê: Xpander 7 Chỗ Tự Lái • 4 ngày</span>
+</div>
+<!-- Review 3 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-9 h-9 rounded-full bg-tertiary-container text-on-tertiary-container font-bold flex items-center justify-center font-label-md text-label-md">M</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Trần Mai Linh</span>
+<span class="font-label-sm text-label-sm text-outline">Du lịch Hà Nội</span>
+</div>
+</div>
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          "Hai đứa con gái đi chơi chỉ ngại mũ bảo hiểm bẩn, mà bên SangRental mũ xịt thơm tinh dầu sả chanh thích mê. Xe Vision màu xanh pastel xinh xắn chụp ảnh cực hợp biển Mỹ Khê. Không giữ CCCD nên nhận phòng khách sạn nhanh gọn."
+        </p>
+<span class="font-label-sm text-label-sm text-outline">Đã thuê: Honda Vision Smartkey • 3 ngày</span>
+</div>
+<!-- Review 4 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-9 h-9 rounded-full bg-primary text-on-primary font-bold flex items-center justify-center font-label-md text-label-md">K</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Kim Min-soo</span>
+<span class="font-label-sm text-label-sm text-outline">Seoul, Hàn Quốc • Local Guide</span>
+</div>
+</div>
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          "다낭 국제공항 T2 터미널에서 바로 픽업했습니다. 직원분이 친절하게 맞이해주셨고 카카오톡 소통도 원활했습니다. 차량 상태가 매우 깨끗했습니다. 다음 여행에도 다시 이용할 예정입니다!"
+        </p>
+<span class="font-label-sm text-label-sm text-outline">Đã thuê: Ô tô Sedan Tự Lái • 5 ngày</span>
+</div>
+<!-- Review 5 -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-9 h-9 rounded-full bg-inverse-surface text-inverse-on-surface font-bold flex items-center justify-center font-label-md text-label-md">T</div>
+<div class="flex flex-col">
+<span class="font-title text-title text-on-surface font-bold">Lê Quốc Tuấn</span>
+<span class="font-label-sm text-label-sm text-outline">TP. Hồ Chí Minh</span>
+</div>
+</div>
+<div class="flex text-tertiary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          "Công ty mình thuê xe 16 chỗ Solati đi Đà Nẵng - Lăng Cô - Huế. Bác tài lái rất đằm, rành các quán hải sản ngon rẻ địa phương, nhiệt tình chụp ảnh cho cả đoàn. Giá cả niêm yết rõ ràng không phát sinh."
+        </p>
+<span class="font-label-sm text-label-sm text-outline">Đã thuê: Xe 16 Chỗ Kèm Bác Tài • Tuyến ĐN - Huế</span>
+</div>
+</div>
+</section>
+<!-- 9. CALL BANNER & FOOTER OVERVIEW -->
+<section class="px-gutter-mobile mb-space-xl relative z-10"><div class="w-full bg-surface-container-lowest rounded-xl shadow-lg p-space-md flex flex-col gap-space-sm border border-outline-variant/30"><div class="flex items-start justify-between gap-2"><div class="flex flex-col"><span class="font-label-caps text-label-caps text-primary font-bold tracking-wider">TƯ VẤN NHANH 24/7</span><h2 class="font-title text-title text-on-surface font-bold leading-tight">Đăng ký tư vấn &amp; Nhận báo giá nhanh</h2></div><span class="shrink-0 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-caps text-label-caps font-bold shadow-sm"><span class="material-symbols-outlined text-[14px]">bolt</span>Phản hồi 5 phút</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">Để lại thông tin, đội ngũ SangRental sẽ liên hệ gửi hình xe thật &amp; báo giá ưu đãi tốt nhất ngay.</p><form class="flex flex-col gap-space-xs mt-1" onsubmit="event.preventDefault(); alert('Cảm ơn bạn! SangRental sẽ liên hệ tư vấn trong 5 phút.');"><div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-outline font-medium">Họ và tên</label><div class="flex items-center gap-2 px-space-sm h-11 rounded-lg bg-surface-container-low text-on-surface"><span class="material-symbols-outlined text-primary text-[18px]">person</span><input class="w-full bg-transparent font-body-md text-body-md text-on-surface focus:outline-none placeholder:text-outline-variant" placeholder="Nguyễn Văn A" required="" type="text"></div></div><div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-outline font-medium">Số điện thoại / Zalo</label><div class="flex items-center gap-2 px-space-sm h-11 rounded-lg bg-surface-container-low text-on-surface"><span class="material-symbols-outlined text-primary text-[18px]">call</span><input class="w-full bg-transparent font-body-md text-body-md text-on-surface focus:outline-none placeholder:text-outline-variant" placeholder="09xx xxx xxx" required="" type="tel"></div></div><div class="grid grid-cols-1 min-[380px]:grid-cols-2 gap-space-xs"><div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-outline font-medium">Loại phương tiện</label><div class="flex items-center gap-1.5 px-space-sm h-11 rounded-lg bg-surface-container-low text-on-surface"><span class="material-symbols-outlined text-secondary text-[18px]">two_wheeler</span><select class="w-full bg-transparent font-body-sm text-body-sm text-on-surface focus:outline-none"><option>Xe ga Vision/Air Blade</option><option>Xe số Wave/Sirius</option><option>Côn tay Winner/Exciter</option><option>Ô tô 4 chỗ (Vios, Accent)</option><option>Ô tô 7 chỗ (Xpander)</option><option>Xe 16 chỗ Solati/Transit</option></select></div></div><div class="flex flex-col gap-1"><label class="font-label-sm text-label-sm text-outline font-medium">Địa điểm nhận xe</label><div class="flex items-center gap-1.5 px-space-sm h-11 rounded-lg bg-surface-container-low text-on-surface"><span class="material-symbols-outlined text-secondary text-[18px]">location_on</span><select class="w-full bg-transparent font-body-sm text-body-sm text-on-surface focus:outline-none"><option>Sân bay Đà Nẵng Ga T1/T2</option><option>Khách sạn Mỹ Khê / Võ Nguyên Giáp</option><option>Trung tâm TP Đà Nẵng</option><option>Giao nhận tại Hội An</option></select></div></div></div><button class="w-full h-12 mt-1 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-bold flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all" type="submit"><span class="material-symbols-outlined text-[20px]">send</span><span class="">Gửi yêu cầu &amp; Nhận giá tốt</span></button></form><div class="flex items-center justify-center gap-1.5 pt-1 text-center font-label-sm text-label-sm text-outline"><span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span><span class="">✓ Miễn phí giao tận nơi • 100% không giữ CCCD gốc • Bảo mật thông tin</span></div></div></section><section class="px-gutter-mobile mb-space-xl flex flex-col gap-space-md">
+<div class="relative rounded-xl overflow-hidden p-space-md bg-inverse-surface text-inverse-on-surface flex flex-col gap-space-sm shadow-lg">
+<span class="font-label-caps text-label-caps text-secondary-fixed">HOTLINE TRỰC 24/7</span>
+<h3 class="font-headline-md text-headline-md font-bold leading-tight">Cần xe gấp tại sân bay hoặc khách sạn?</h3>
+<p class="font-body-sm text-body-sm text-surface-container leading-relaxed">
+        Đội ngũ điều phối viên SangRental túc trực sẵn sàng mang xe đến vị trí của bạn chỉ sau 15 phút điện thoại.
+      </p>
+<div class="flex items-center gap-space-xs mt-1">
+<a class="flex-1 h-12 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-bold flex items-center justify-center gap-2 shadow-md" href="tel:0905123456">
+<span class="material-symbols-outlined text-[20px]">phone_in_talk</span>
+<span class="">0905.123.456</span>
+</a>
+<a class="h-12 px-4 rounded-lg bg-surface-container-lowest text-primary font-label-md text-label-md font-bold flex items-center justify-center gap-1.5 shadow-md" href="https://zalo.me/0905123456" target="_blank">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+<span class="">Zalo</span>
+</a>
+</div>
+</div>
+<!-- Mini Footer Info -->
+<div class="flex flex-col gap-space-xs text-center py-space-sm text-on-surface-variant">
+<span class="font-title text-title text-on-surface font-bold">SangRental Đà Nẵng</span>
+<span class="font-body-sm text-body-sm">Địa chỉ: 124 Võ Nguyên Giáp, Phước Mỹ, Sơn Trà, Đà Nẵng</span>
+<span class="font-body-sm text-body-sm">Cơ sở 2: Ga đến Quốc Nội T1, Sân bay Quốc tế Đà Nẵng</span>
+<span class="font-label-sm text-label-sm text-outline mt-2">© 2024 SangRental • Dịch vụ cho thuê xe máy &amp; ô tô cao cấp Đà Nẵng</span>
+</div>
+</section>
+<!-- FIXED STICKY BOTTOM ACTION BAR (Direct Above Shell Bottom Navigation) -->
+<aside class="sticky bottom-16 w-full z-40 px-gutter-mobile pb-space-xs pointer-events-none">
+<div class="w-full bg-surface-container-lowest/95 backdrop-blur-xl rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-2 flex items-center justify-between gap-1.5 pointer-events-auto">
+<a class="flex-1 h-11 rounded-xl bg-surface-container-high text-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 active:bg-surface-container transition-colors" href="tel:0905123456">
+<span class="material-symbols-outlined text-[18px]">call</span>
+<span class="">0905.123.456</span>
+</a>
+<a class="h-11 px-3 rounded-xl bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 active:opacity-90" href="https://zalo.me/0905123456" target="_blank">
+<span class="material-symbols-outlined text-[18px]">forum</span>
+<span class="">Zalo</span>
+</a>
+<button class="flex-1 h-11 rounded-xl bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center gap-1 shadow-md active:scale-95 transition-transform" onclick="scrollToBooking()">
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+<span class="">Đặt xe nhanh</span>
+</button>
+</div>
+</aside>
+</div>
+<script>
+  function switchBookingTab(mode) {
+    const motoBtn = document.getElementById('tab-moto');
+    const carBtn = document.getElementById('tab-car');
+    const selectElem = document.getElementById('vehicle-type-select');
+
+    if (mode === 'moto') {
+      motoBtn.className = 'py-2 rounded-md font-label-md text-label-md font-bold flex items-center justify-center gap-1.5 bg-primary-container text-on-primary shadow-sm transition-all';
+      carBtn.className = 'py-2 rounded-md font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-on-surface transition-all';
+      if (selectElem) selectElem.value = 'scooter';
+    } else {
+      carBtn.className = 'py-2 rounded-md font-label-md text-label-md font-bold flex items-center justify-center gap-1.5 bg-primary-container text-on-primary shadow-sm transition-all';
+      motoBtn.className = 'py-2 rounded-md font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 text-on-surface-variant hover:text-on-surface transition-all';
+      if (selectElem) selectElem.value = 'car7';
+    }
+  }
+
+  function scrollToBooking() {
+    window.scrollTo({ top: 120, behavior: 'smooth' });
+  }
+
+  function triggerQuickBook(vehicleName) {
+    scrollToBooking();
+    const select = document.getElementById('vehicle-type-select');
+    if (!select) return;
+    if (vehicleName.includes('Air Blade') || vehicleName.includes('Vision')) {
+      switchBookingTab('moto');
+      select.value = 'scooter';
+    } else if (vehicleName.includes('Wave')) {
+      switchBookingTab('moto');
+      select.value = 'gear';
+    } else if (vehicleName.includes('Xpander')) {
+      switchBookingTab('car');
+      select.value = 'car7';
+    }
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_20px_rgba(18,60,80,0.06)]" data-active-classes="text-primary font-bold"><div class="flex items-center justify-around h-16 px-space-xs"><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant transition-colors" data-path="trang-chu" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-label-sm text-label-sm mt-0.5">Trang chủ</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant transition-colors" data-path="danh-muc-xe-may" href="#"><span class="material-symbols-outlined text-[22px]">two_wheeler</span><span class="font-label-sm text-label-sm mt-0.5">Xe máy</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant transition-colors" data-path="danh-muc-o-to" href="#"><span class="material-symbols-outlined text-[22px]">directions_car</span><span class="font-label-sm text-label-sm mt-0.5">Ô tô</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant transition-colors" data-path="hotline-ho-tro" href="tel:0905123456"><span class="material-symbols-outlined text-[22px]">phone_in_talk</span><span class="font-label-sm text-label-sm mt-0.5">Gọi điện</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-primary-container transition-colors" data-path="dat-xe-nhanh" href="#"><div class="w-9 h-9 rounded-full bg-primary-container text-on-primary flex items-center justify-center shadow-[0_4px_12px_rgba(8,126,164,0.3)]"><span class="material-symbols-outlined text-[20px]">bolt</span></div><span class="font-label-sm text-label-sm text-primary font-semibold mt-0.5">Đặt xe</span></a></div></nav>
+
+</body></html>
