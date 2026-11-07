@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/admin/">
+    <Project Path="admin/SangRental.Admin/SangRental.Admin.csproj" />
+  </Folder>
+  <Folder Name="/backend/">
+    <Project Path="backend/SangRental.Api/SangRental.Api.csproj" />
+    <Project Path="backend/SangRental.Application/SangRental.Application.csproj" />
+    <Project Path="backend/SangRental.Domain/SangRental.Domain.csproj" />
+    <Project Path="backend/SangRental.Infrastructure/SangRental.Infrastructure.csproj" />
+  </Folder>
+</Solution>

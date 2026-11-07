@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "../design/coastal.css";
+:root{--background:#f5faff;--foreground:#001e2c;--card:#fff;--card-foreground:#001e2c;--popover:#fff;--popover-foreground:#001e2c;--primary:#087ea4;--primary-foreground:#fff;--secondary:#006a65;--secondary-foreground:#fff;--muted:#e9f5ff;--muted-foreground:#3f484e;--accent:#ddf1ff;--accent-foreground:#004d66;--destructive:#ba1a1a;--border:#d9e5ed;--input:#bec8ce;--ring:#006483;--radius:.75rem}
+@theme inline{--color-background:var(--background);--color-foreground:var(--foreground);--color-card:var(--card);--color-card-foreground:var(--card-foreground);--color-popover:var(--popover);--color-popover-foreground:var(--popover-foreground);--color-primary:var(--primary);--color-primary-foreground:var(--primary-foreground);--color-secondary:var(--secondary);--color-secondary-foreground:var(--secondary-foreground);--color-muted:var(--muted);--color-muted-foreground:var(--muted-foreground);--color-accent:var(--accent);--color-accent-foreground:var(--accent-foreground);--color-destructive:var(--destructive);--color-border:var(--border);--color-input:var(--input);--color-ring:var(--ring);--radius-sm:calc(var(--radius) - 4px);--radius-md:calc(var(--radius) - 2px);--radius-lg:var(--radius);--radius-xl:calc(var(--radius) + 4px)}
+body{margin:0;background:var(--background);color:var(--foreground);font-family:Arial,Helvetica,sans-serif}html{scroll-behavior:smooth}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+:root {
+  --background: var(--coastal-ivory);
+  --foreground: var(--coastal-navy);
+  --card-foreground: var(--coastal-navy);
+  --popover: var(--coastal-ivory);
+  --popover-foreground: var(--coastal-navy);
+  --primary: var(--coastal-ocean);
+  --secondary: var(--coastal-navy);
+  --accent: var(--coastal-sand);
+  --accent-foreground: var(--coastal-navy);
+  --ring: var(--coastal-ocean);
+}

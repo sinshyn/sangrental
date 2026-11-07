@@ -1,0 +1,33 @@
+:root {
+  --coastal-ocean: #087ea4;
+  --coastal-turquoise: #16b8b0;
+  --coastal-sand: #ebcb83;
+  --coastal-navy: #123c50;
+  --coastal-ivory: #fff9ee;
+}
+
+.sangrental-notification {
+  border-radius: 1rem;
+  font-family: inherit;
+}
+.sangrental-notification .swal2-actions { gap: .5rem; }
+.sangrental-notification .swal2-styled {
+  min-height: 44px;
+  border-radius: .75rem;
+}
+.sangrental-notification .swal2-styled:focus-visible {
+  outline: 3px solid var(--coastal-ocean);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+.sangrental-notification .swal2-html-container { overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .swal2-container { padding: 1rem; }
+  .sangrental-notification .swal2-actions { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sangrental-notification, .sangrental-notification * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

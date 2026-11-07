@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+**/node_modules/
+**/.next/
+**/out/
+.vs/
+.idea/
+.env
+.env.*
+!.env.example
+**/appsettings.Local.json
+*.user
+*.log
+artifacts/
+**/tsconfig.tsbuildinfo

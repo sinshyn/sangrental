@@ -1,0 +1,8 @@
+{
+  "vi": { "ready": "Thao tác đã hoàn tất.", "error": "Có lỗi xảy ra. Vui lòng thử lại.", "warning": "Vui lòng kiểm tra trước khi tiếp tục.", "info": "Chức năng đang được chuẩn bị.", "confirm": "Bạn có muốn tiếp tục không?", "loading": "Đang xử lý…", "ok": "Đồng ý", "cancel": "Hủy" },
+  "en": { "ready": "The operation is complete.", "error": "Something went wrong. Please try again.", "warning": "Please check before continuing.", "info": "This feature is being prepared.", "confirm": "Would you like to continue?", "loading": "Processing…", "ok": "Confirm", "cancel": "Cancel" },
+  "ko": { "ready": "작업이 완료되었습니다.", "error": "오류가 발생했습니다. 다시 시도해 주세요.", "warning": "계속하기 전에 확인해 주세요.", "info": "기능을 준비 중입니다.", "confirm": "계속하시겠습니까?", "loading": "처리 중…", "ok": "확인", "cancel": "취소" },
+  "zh-CN": { "ready": "操作已完成。", "error": "发生错误，请重试。", "warning": "请先检查再继续。", "info": "此功能正在准备中。", "confirm": "是否继续？", "loading": "处理中…", "ok": "确认", "cancel": "取消" },
+  "ja": { "ready": "操作が完了しました。", "error": "エラーが発生しました。もう一度お試しください。", "warning": "続行する前に確認してください。", "info": "この機能は準備中です。", "confirm": "続行しますか？", "loading": "処理中…", "ok": "確認", "cancel": "キャンセル" },
+  "th": { "ready": "ดำเนินการเสร็จสิ้นแล้ว", "error": "เกิดข้อผิดพลาด โปรดลองอีกครั้ง", "warning": "โปรดตรวจสอบก่อนดำเนินการต่อ", "info": "กำลังเตรียมฟีเจอร์นี้", "confirm": "ต้องการดำเนินการต่อหรือไม่", "loading": "กำลังดำเนินการ…", "ok": "ยืนยัน", "cancel": "ยกเลิก" }
+}

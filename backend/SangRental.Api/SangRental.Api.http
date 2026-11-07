@@ -1,0 +1,8 @@
+@host = http://localhost:5100
+GET {{host}}/health/live
+
+### Readiness: 503 until SQL Server is configured
+GET {{host}}/health/ready
+
+### Development only
+GET {{host}}/openapi/v1.json
