@@ -8,4 +8,8 @@
     <Project Path="backend/SangRental.Domain/SangRental.Domain.csproj" />
     <Project Path="backend/SangRental.Infrastructure/SangRental.Infrastructure.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SangRental.CatalogFleet.GuardSmoke/SangRental.CatalogFleet.GuardSmoke.csproj" />
+    <Project Path="tests/SangRental.Identity.Integration/SangRental.Identity.Integration.csproj" />
+  </Folder>
 </Solution>

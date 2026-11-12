@@ -4,7 +4,7 @@ Nguồn: Master Prompt và đặc tả chi tiết v2.7 cùng thư mục. Các b�
 
 ## Phạm vi hiện tại
 
-Chỉ scaffold: Clean Architecture .NET10, EF SQL Server/migration rỗng, Next App Router/TS/Tailwind, Blazor layout/auth shell, tài liệu và kiểm tra khởi động. Không booking/payment/live customer data.
+Clean Architecture .NET10, 16 entity Catalog/Fleet, Identity + cookie đã duyệt, API tạo/đọc catalog nháp và xe/bảo trì/checklist. Identity migration và SQL/API tests áp dụng trên SangRentalTestDb; Development giữ hai migration đầu. Frontend vẫn preview; booking/payment/live customer data chưa triển khai. Các đoạn nghiệp vụ nguồn dưới đây là yêu cầu, không phải mô tả tính năng đã hoàn tất.
 
 ## 2. Yêu cầu website công khai (nguồn Word)
 

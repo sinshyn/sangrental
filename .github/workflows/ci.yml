@@ -18,11 +18,13 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - run: npm --prefix frontend ci
+      - run: npm --prefix frontend run lint
       - run: node scripts/prepare-ui-assets.mjs
-      - run: node --test scripts/notifications.test.mjs scripts/ui-policy.test.mjs
+      - run: node --test scripts/notifications.test.mjs scripts/ui-policy.test.mjs scripts/fleet-forms.test.mjs
       - run: dotnet restore SangRental.slnx --locked-mode
       - run: dotnet tool restore
       - run: dotnet build SangRental.slnx --no-restore
+      - run: dotnet run --project tests/SangRental.Identity.Integration --no-build --no-restore -- --media-only
       - run: dotnet ef migrations has-pending-model-changes --project backend/SangRental.Infrastructure --startup-project backend/SangRental.Api --no-build
       - run: npm --prefix frontend run typecheck
       - run: npm --prefix frontend run build

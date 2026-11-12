@@ -1,0 +1,267 @@
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.EntityFrameworkCore
+@using SangRental.Application.CatalogFleet
+@using SangRental.Domain.CatalogFleet
+@using SangRental.Infrastructure.Persistence
+@using SangRental.Admin.Services
+@inject CatalogFleetSetupService Setup
+@inject CatalogFleetCommandService Commands
+@inject SangRentalDbContext Database
+@inject FleetUiService Feedback
+@inject NavigationManager Navigation
+
+<EditForm EditContext="Context" FormName="@Handler" method="post" OnValidSubmit="SaveAsync" Enhance="false" class="catalog-form" data-fleet-form="true" data-confirm="@(Kind is "complete" or "activate" or "retire" or "restore" or "profile" or "registration" ? "true" : "false")">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    @if (Kind == "vehicle")
+    {
+        <p><a href="/catalog">Xem mã ID mẫu xe trong danh mục</a></p>
+        <label for="fleet-model">ID mẫu xe</label><InputNumber id="fleet-model" @bind-Value="Input!.ModelId" min="1" required /><ValidationMessage For="@(() => Input!.ModelId)" />
+        <label for="fleet-asset">Mã tài sản</label><InputText id="fleet-asset" @bind-Value="Input!.AssetCode" maxlength="64" required /><ValidationMessage For="@(() => Input!.AssetCode)" />
+        <label for="fleet-vin">VIN / số khung (nếu có)</label><InputText id="fleet-vin" @bind-Value="Input!.Vin" maxlength="100" /><ValidationMessage For="@(() => Input!.Vin)" />
+        <label for="fleet-vin-reason">Lý do chấp nhận VIN trùng (nếu có)</label><InputTextArea id="fleet-vin-reason" @bind-Value="Input!.DuplicateVinReason" maxlength="1000" /><ValidationMessage For="@(() => Input!.DuplicateVinReason)" />
+        <label class="checkbox-label"><InputCheckbox @bind-Value="Input!.ConfirmInitialInspection" /> Tôi đã kiểm tra ban đầu và xác nhận xe đạt điều kiện Ready. Bỏ chọn để tạo xe nháp.</label>
+    }
+    @if (Kind == "schedule")
+    {
+        <label for="maintenance-start">Bắt đầu (giờ Việt Nam)</label><InputText id="maintenance-start" type="datetime-local" @bind-Value="Input!.StartLocal" required /><ValidationMessage For="@(() => Input!.StartLocal)" />
+        <label for="maintenance-end">Kết thúc dự kiến (không bắt buộc)</label><InputText id="maintenance-end" type="datetime-local" @bind-Value="Input!.EndLocal" /><ValidationMessage For="@(() => Input!.EndLocal)" />
+        <label for="maintenance-reason">Lý do bảo trì</label><InputTextArea id="maintenance-reason" @bind-Value="Input!.Reason" maxlength="1000" required /><ValidationMessage For="@(() => Input!.Reason)" />
+    }
+    @if (Kind == "add-task")
+    {
+        <label for="task-title">Tên việc kiểm tra</label><InputText id="task-title" @bind-Value="Input!.Title" maxlength="200" required /><ValidationMessage For="@(() => Input!.Title)" />
+    }
+    @if (Kind == "task")
+    {
+        <label for="@($"status-{ItemId}")">Kết quả</label><InputSelect id="@($"status-{ItemId}")" @bind-Value="Input!.Status"><option value="Completed">Đã hoàn tất</option><option value="Skipped">Bỏ qua có lý do</option></InputSelect><ValidationMessage For="@(() => Input!.Status)" />
+        <label for="@($"note-{ItemId}")">Ghi chú</label><InputTextArea id="@($"note-{ItemId}")" @bind-Value="Input!.Note" maxlength="2000" /><ValidationMessage For="@(() => Input!.Note)" />
+        <label for="@($"skip-{ItemId}")">Lý do bỏ qua (bắt buộc nếu bỏ qua)</label><InputTextArea id="@($"skip-{ItemId}")" @bind-Value="Input!.SkipReason" maxlength="1000" /><ValidationMessage For="@(() => Input!.SkipReason)" />
+    }
+    @if (Kind == "profile")
+    {
+        <p>Mã tài sản giữ nguyên. Đổi mẫu xe cần lý do; lịch sử kiểm tra, bảo trì và audit vẫn được giữ.</p>
+        <label for="profile-model">ID mẫu xe</label><InputNumber id="profile-model" @bind-Value="Input!.ModelId" min="1" required /><ValidationMessage For="@(() => Input!.ModelId)" />
+        <label for="profile-color">Màu xe (nếu có)</label><InputText id="profile-color" @bind-Value="Input!.ColorName" maxlength="80" /><ValidationMessage For="@(() => Input!.ColorName)" />
+        <label for="profile-year">Năm sản xuất (nếu có)</label><InputNumber id="profile-year" @bind-Value="Input!.ManufacturingYear" min="1" max="32767" /><ValidationMessage For="@(() => Input!.ManufacturingYear)" />
+        <label for="profile-vin">VIN / số khung (nếu có)</label><InputText id="profile-vin" @bind-Value="Input!.Vin" maxlength="100" /><ValidationMessage For="@(() => Input!.Vin)" />
+        <label for="profile-vin-reason">Lý do chấp nhận VIN trùng (nếu có)</label><InputTextArea id="profile-vin-reason" @bind-Value="Input!.DuplicateVinReason" maxlength="1000" /><ValidationMessage For="@(() => Input!.DuplicateVinReason)" />
+    }
+    @if (Kind == "registration")
+    {
+        <p>Đổi biển có hiệu lực khi lưu, giữ biển cũ trong lịch sử. Dữ liệu này không thay xác minh giấy tờ đăng ký.</p>
+        <label for="plate-country">Mã quốc gia (hai chữ hoa, ví dụ VN)</label><InputText id="plate-country" @bind-Value="Input!.JurisdictionCode" maxlength="2" required pattern="[A-Z]{2}" /><ValidationMessage For="@(() => Input!.JurisdictionCode)" />
+        <label for="plate-display">Biển số</label><InputText id="plate-display" @bind-Value="Input!.Plate" maxlength="32" required /><ValidationMessage For="@(() => Input!.Plate)" />
+    }
+    @if (Kind is "activate" or "retire" or "restore" or "profile" or "registration")
+    {
+        <label for="@($"lifecycle-reason-{Kind}")">Lý do</label><InputTextArea id="@($"lifecycle-reason-{Kind}")" @bind-Value="Input!.Reason" maxlength="1000" required /><ValidationMessage For="@(() => Input!.Reason)" />
+        @if (Kind is "activate" or "restore")
+        {
+            <label class="checkbox-label"><InputCheckbox @bind-Value="Input!.ConfirmReview" required /> Tôi đã kiểm tra xe và xác nhận đạt điều kiện sẵn sàng khai thác.</label><ValidationMessage For="@(() => Input!.ConfirmReview)" />
+        }
+    }
+    @if (Kind is "task" or "complete" or "activate" or "retire" or "restore" or "profile" or "registration")
+    {
+        <input type="hidden" name="Input.RowVersion" value="@Input!.RowVersion" /><ValidationMessage For="@(() => Input!.RowVersion)" />
+    }
+    @if (Kind == "complete")
+    {
+        <label class="checkbox-label"><InputCheckbox @bind-Value="Input!.ConfirmReview" required /> Tôi xác nhận đã kiểm tra xe và đủ điều kiện hoàn tất bảo trì.</label><ValidationMessage For="@(() => Input!.ConfirmReview)" />
+    }
+    <button type="submit">@ButtonText</button>
+    <p hidden data-notification-failure role="alert">Chưa tải được hệ thống thông báo. Vui lòng tải lại trang trước khi gửi.</p>
+</EditForm>
+@if (Failed) { <AccountNotice Error="catalog-error" @rendermode="InteractiveServer" /> }
+
+@code {
+    [Parameter, EditorRequired] public string Kind { get; set; } = "vehicle";
+    [Parameter] public long VehicleId { get; set; }
+    [Parameter] public long EpisodeId { get; set; }
+    [Parameter] public long ItemId { get; set; }
+    [Parameter] public string? Version { get; set; }
+    [Parameter] public PhysicalVehicle? InitialVehicle { get; set; }
+    [SupplyParameterFromForm] private FleetInput? Input { get; set; }
+    [CascadingParameter] private HttpContext? HttpContext { get; set; }
+    private EditContext Context = null!;
+    private ValidationMessageStore Errors = null!;
+    private bool Failed;
+    private string Handler => Kind == "task" ? $"fleet-task-{ItemId}" : $"fleet-{Kind}";
+    private string ButtonText => Kind switch { "vehicle" => "Tạo xe", "schedule" => "Lập lịch bảo trì", "add-task" => "Thêm việc kiểm tra", "task" => "Lưu kết quả", "activate" => "Kích hoạt sau kiểm tra", "retire" => "Ngừng khai thác", "restore" => "Khôi phục sau kiểm tra", "profile" => "Lưu hồ sơ xe", "registration" => "Lưu biển số mới", _ => "Xác nhận hoàn tất bảo trì" };
+    protected override void OnInitialized()
+    {
+        Input ??= new();
+        Input.ActionKind = Kind;
+        if (HttpContext?.Request.Method != "POST")
+        {
+            Input.RowVersion = Version; Input.Status = "Completed"; Input.JurisdictionCode = "VN";
+            if (Kind == "profile" && InitialVehicle is { } vehicle)
+            {
+                Input.ModelId = vehicle.VehicleModelId; Input.ColorName = vehicle.ColorName;
+                Input.ManufacturingYear = vehicle.ManufacturingYear; Input.Vin = vehicle.VinOrChassisNumber;
+            }
+        }
+        Context = new(Input); Errors = new(Context);
+    }
+
+    private async Task SaveAsync()
+    {
+        if (HttpContext?.Request.IsHttps != true) { Failed = true; return; }
+        Errors.Clear();
+        var ct = HttpContext.RequestAborted;
+        var target = "/fleet";
+        try
+        {
+            if (Kind == "vehicle")
+            {
+                var request = new CreateVehicleRequest(Input!.ModelId ?? 0, Input.AssetCode!, Input.Vin, Input.ConfirmInitialInspection, Input.DuplicateVinReason);
+                CatalogFleetSetupService.Validate(request);
+                var vin = string.IsNullOrWhiteSpace(Input.Vin) ? null : Input.Vin.Trim();
+                var id = Input.ConfirmInitialInspection
+                    ? await Commands.CreateReadyVehicleAsync(new PhysicalVehicle { VehicleModelId = request.ModelId, AssetCode = request.AssetCode.Trim(), VinOrChassisNumber = vin, NormalizedVinOrChassisNumber = vin?.ToUpperInvariant() }, Input.DuplicateVinReason, ct)
+                    : await Setup.CreateDraftVehicleAsync(request, ct);
+                target = $"/fleet/vehicles/{id}";
+            }
+            else if (Kind == "profile")
+            {
+                await Commands.UpdateVehicleProfileAsync(VehicleId, new(Input!.ModelId ?? 0, Input.ColorName,
+                    Input.ManufacturingYear, Input.Vin, Input.Reason!, Input.DuplicateVinReason), Convert.FromBase64String(Input.RowVersion!), ct);
+                target = $"/fleet/vehicles/{VehicleId}";
+            }
+            else if (Kind == "registration")
+            {
+                await Commands.ChangeVehicleRegistrationAsync(VehicleId, new(Input!.JurisdictionCode!, Input.Plate!, Input.Reason!),
+                    Convert.FromBase64String(Input.RowVersion!), ct);
+                target = $"/fleet/vehicles/{VehicleId}";
+            }
+            else if (Kind is "activate" or "retire" or "restore")
+            {
+                var request = new ChangeVehicleLifecycleRequest(Input!.Reason!, Input.ConfirmReview);
+                var version = Convert.FromBase64String(Input.RowVersion!);
+                if (Kind == "activate") await Commands.ActivateVehicleAsync(VehicleId, request, version, ct);
+                else if (Kind == "retire") await Commands.RetireVehicleAsync(VehicleId, request, version, ct);
+                else await Commands.RestoreVehicleAsync(VehicleId, request, version, ct);
+                target = $"/fleet/vehicles/{VehicleId}";
+            }
+            else if (Kind == "schedule")
+            {
+                FleetUiService.TryUtc(Input!.StartLocal, out var start);
+                DateTime? end = FleetUiService.TryUtc(Input.EndLocal, out var convertedEnd) ? convertedEnd : null;
+                var id = await Commands.ScheduleMaintenanceAsync(VehicleId, start, end, Input.Reason!, ct);
+                target = $"/fleet/maintenance/{id}";
+            }
+            else if (Kind == "add-task")
+            {
+                await Commands.AddMaintenanceTaskAsync(EpisodeId, null, Input!.Title, ct);
+                target = $"/fleet/maintenance/{EpisodeId}";
+            }
+            else if (Kind == "task")
+            {
+                if (!await Database.Set<MaintenanceChecklistItem>().AnyAsync(x => x.Id == ItemId && x.MaintenanceEpisodeId == EpisodeId, ct))
+                    throw new CatalogFleetRuleException("maintenance.task_not_found");
+                await Commands.SetMaintenanceTaskStatusAsync(ItemId, Input!.Status!, Input.Note, Input.SkipReason, ct, Convert.FromBase64String(Input.RowVersion!));
+                target = $"/fleet/maintenance/{EpisodeId}";
+            }
+            else if (Kind == "complete")
+            {
+                await Commands.CompleteMaintenanceAsync(EpisodeId, ct, Convert.FromBase64String(Input!.RowVersion!));
+                target = $"/fleet/maintenance/{EpisodeId}";
+            }
+            else throw new InvalidOperationException();
+            Feedback.Saved(HttpContext);
+            Navigation.NavigateTo(target, forceLoad: true);
+        }
+        catch (DbUpdateConcurrencyException) { Error(nameof(FleetInput.RowVersion), "Dữ liệu đã thay đổi. Tải lại trang và kiểm tra trước khi gửi lại."); }
+        catch (CatalogFleetRuleException error)
+        {
+            var (field, message) = error.Code switch
+            {
+                "vehicle.model_unavailable" => (nameof(FleetInput.ModelId), "Mẫu xe không tồn tại hoặc đã ngừng hoạt động."),
+                "vehicle.duplicate_vin_reason_required" => (nameof(FleetInput.DuplicateVinReason), "VIN đã tồn tại. Cần nhập lý do chấp nhận trùng."),
+                "vehicle.inspection_confirmation_required" => (nameof(FleetInput.ConfirmReview), "Cần xác nhận kiểm tra xe trước khi kích hoạt hoặc khôi phục."),
+                "vehicle.incident_locked" => (nameof(FleetInput.ConfirmReview), "Xe đang khóa do mất hoặc tai nạn. Cần xử lý hồ sơ sự cố trước khi mở lại."),
+                "vehicle.maintenance_open" => (nameof(FleetInput.Reason), "Xe còn đợt bảo trì đang chặn thao tác. Cần xử lý bảo trì trước khi thay đổi hồ sơ."),
+                "vehicle.invalid_lifecycle_transition" => ("", "Trạng thái hồ sơ đã thay đổi hoặc không phù hợp thao tác. Tải lại trang để kiểm tra."),
+                "vehicle.plate_in_use" => (nameof(FleetInput.Plate), "Biển số đang được gán cho xe khác trong cùng quốc gia."),
+                "vehicle.registration_unchanged" => (nameof(FleetInput.Plate), "Biển số này đang là biển hiện hành của xe."),
+                "vehicle.registration_time_conflict" => (nameof(FleetInput.Plate), "Thời điểm đổi biển chưa hợp lệ. Tải lại trang trước khi thử lại."),
+                "maintenance.overlap" => (nameof(FleetInput.StartLocal), "Lịch bảo trì trùng với đợt khác chưa được giải phóng."),
+                "maintenance.invalid_interval" => (nameof(FleetInput.EndLocal), "Giờ kết thúc phải sau giờ bắt đầu."),
+                "maintenance.checklist_incomplete" => (nameof(FleetInput.ConfirmReview), "Checklist chưa đầy đủ. Hoàn tất hoặc bỏ qua có lý do mọi mục trước khi kết thúc."),
+                "maintenance.not_started" => (nameof(FleetInput.ConfirmReview), "Đợt bảo trì chưa đến giờ bắt đầu."),
+                "maintenance.vehicle_locked" => (nameof(FleetInput.ConfirmReview), "Xe đang bị khóa hoặc ngừng khai thác; không thể hoàn tất để Ready."),
+                _ => ("", "Không thể thực hiện với trạng thái hiện tại. Tải lại trang để kiểm tra xe và đợt bảo trì.")
+            };
+            Error(field, message);
+        }
+        catch (DbUpdateException error) when (error.InnerException is Microsoft.Data.SqlClient.SqlException sql && sql.Number is 2601 or 2627)
+        { Error(nameof(FleetInput.AssetCode), "Mã tài sản đã tồn tại. Chọn mã khác."); }
+        catch (Exception error) when (error is Microsoft.Data.SqlClient.SqlException or DbUpdateException or InvalidOperationException or ValidationException or FormatException)
+        { Failed = true; }
+    }
+
+    private void Error(string field, string message) { Errors.Add(Context.Field(field), message); Context.NotifyValidationStateChanged(); }
+
+    public sealed class FleetInput : IValidatableObject
+    {
+        public string? ActionKind { get; set; }
+        public long? ModelId { get; set; }
+        [StringLength(64, ErrorMessage = "Mã tài sản tối đa 64 ký tự.")] public string? AssetCode { get; set; }
+        [StringLength(100, ErrorMessage = "VIN tối đa 100 ký tự.")] public string? Vin { get; set; }
+        [StringLength(1000, ErrorMessage = "Lý do tối đa 1000 ký tự.")] public string? DuplicateVinReason { get; set; }
+        public bool ConfirmInitialInspection { get; set; }
+        [StringLength(80, ErrorMessage = "Màu xe tối đa 80 ký tự.")] public string? ColorName { get; set; }
+        [Range(1, short.MaxValue, ErrorMessage = "Năm sản xuất phải là số nguyên dương hợp lệ.")] public short? ManufacturingYear { get; set; }
+        public string? JurisdictionCode { get; set; }
+        [StringLength(32, ErrorMessage = "Biển số tối đa 32 ký tự.")] public string? Plate { get; set; }
+        public string? StartLocal { get; set; }
+        public string? EndLocal { get; set; }
+        [StringLength(1000, ErrorMessage = "Lý do tối đa 1000 ký tự.")] public string? Reason { get; set; }
+        [StringLength(200, ErrorMessage = "Tên việc tối đa 200 ký tự.")] public string? Title { get; set; }
+        public string? Status { get; set; }
+        [StringLength(2000, ErrorMessage = "Ghi chú tối đa 2000 ký tự.")] public string? Note { get; set; }
+        [StringLength(1000, ErrorMessage = "Lý do tối đa 1000 ký tự.")] public string? SkipReason { get; set; }
+        public string? RowVersion { get; set; }
+        public bool ConfirmReview { get; set; }
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (ActionKind == "vehicle")
+            {
+                if (ModelId is null or <= 0) yield return new("ID mẫu xe phải lớn hơn 0.", [nameof(ModelId)]);
+                if (string.IsNullOrWhiteSpace(AssetCode)) yield return new("Vui lòng nhập mã tài sản.", [nameof(AssetCode)]);
+            }
+            if (ActionKind == "schedule")
+            {
+                if (!FleetUiService.TryUtc(StartLocal, out var start)) yield return new("Vui lòng nhập giờ bắt đầu hợp lệ.", [nameof(StartLocal)]);
+                if (!string.IsNullOrWhiteSpace(EndLocal) && (!FleetUiService.TryUtc(EndLocal, out var end) || end <= start)) yield return new("Giờ kết thúc phải sau giờ bắt đầu.", [nameof(EndLocal)]);
+                if (string.IsNullOrWhiteSpace(Reason)) yield return new("Vui lòng nhập lý do bảo trì.", [nameof(Reason)]);
+            }
+            if (ActionKind == "add-task" && string.IsNullOrWhiteSpace(Title)) yield return new("Vui lòng nhập tên việc kiểm tra.", [nameof(Title)]);
+            if (ActionKind == "task")
+            {
+                if (Status is not ("Completed" or "Skipped")) yield return new("Kết quả không hợp lệ.", [nameof(Status)]);
+                if (Status == "Skipped" && string.IsNullOrWhiteSpace(SkipReason)) yield return new("Vui lòng nhập lý do bỏ qua.", [nameof(SkipReason)]);
+            }
+            if (ActionKind == "profile" && ModelId is null or <= 0) yield return new("ID mẫu xe phải lớn hơn 0.", [nameof(ModelId)]);
+            if (ActionKind == "registration")
+            {
+                if (JurisdictionCode is null || !System.Text.RegularExpressions.Regex.IsMatch(JurisdictionCode, "^[A-Z]{2}$"))
+                    yield return new("Nhập mã quốc gia hai chữ hoa.", [nameof(JurisdictionCode)]);
+                if (string.IsNullOrWhiteSpace(Plate) || !System.Text.RegularExpressions.Regex.IsMatch(Plate, "^[A-Za-z0-9 .-]+$") || !Plate.Any(char.IsAsciiLetterOrDigit))
+                    yield return new("Biển số cần chữ/số, có thể ngăn bằng khoảng trắng, dấu chấm hoặc gạch ngang.", [nameof(Plate)]);
+            }
+            if (ActionKind is "activate" or "retire" or "restore" or "profile" or "registration")
+            {
+                if (string.IsNullOrWhiteSpace(Reason)) yield return new("Vui lòng nhập lý do thay đổi hồ sơ.", [nameof(Reason)]);
+                if (ActionKind is "activate" or "restore" && !ConfirmReview) yield return new("Cần xác nhận kiểm tra xe trước khi kích hoạt hoặc khôi phục.", [nameof(ConfirmReview)]);
+            }
+            if (ActionKind == "complete" && !ConfirmReview) yield return new("Cần xác nhận kiểm tra xe trước khi hoàn tất.", [nameof(ConfirmReview)]);
+            if (ActionKind is "task" or "complete" or "activate" or "retire" or "restore" or "profile" or "registration")
+            {
+                byte[]? version = null;
+                try { if (RowVersion?.Length <= 24) version = Convert.FromBase64String(RowVersion); } catch (FormatException) { }
+                if (version?.Length != 8) yield return new("Thiếu phiên bản dữ liệu hợp lệ. Tải lại trang.", [nameof(RowVersion)]);
+            }
+        }
+    }
+}

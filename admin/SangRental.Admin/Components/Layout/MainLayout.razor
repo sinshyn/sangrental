@@ -1,6 +1,8 @@
 @inherits LayoutComponentBase
 <div class="admin-shell">
-<aside><a class="brand" href="/">SangRental <small>ADMIN</small></a><p>Nền tảng quản trị</p><nav aria-label="Điều hướng quản trị"><a href="/"><img src="vendor/gauge.svg" width="16" height="16" alt="" aria-hidden="true" /> Tổng quan</a></nav><p class="muted">Đội xe · Đặt xe · Tài chính<br />Các module chưa triển khai</p></aside>
-<main><header>Môi trường phát triển · Giai đoạn khởi tạo</header><article>@Body</article></main>
+<aside><a class="brand" href="/">SangRental <small>ADMIN</small></a><p>Nền tảng quản trị</p><nav aria-label="Điều hướng quản trị"><a href="/"><img src="vendor/gauge.svg" width="16" height="16" alt="" aria-hidden="true" /> Tổng quan</a><a href="/catalog">Danh mục xe</a><a href="/fleet">Đội xe và bảo trì</a></nav><p class="muted">Đội xe · Đặt xe · Tài chính<br />Các module còn đang hoàn thiện</p></aside>
+<main><header>Môi trường phát triển · Catalog/Fleet
+<AuthorizeView><Authorized><form method="post" action="/auth/logout" data-enhance="false"><AntiforgeryToken /><button type="submit">Đăng xuất mọi phiên</button></form></Authorized></AuthorizeView>
+</header><article>@Body</article></main>
 </div>
 <div id="blazor-error-ui" data-nosnippet>Có lỗi xảy ra. <a href="." class="reload">Tải lại</a><span class="dismiss">×</span></div>

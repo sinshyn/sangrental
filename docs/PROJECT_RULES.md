@@ -1,6 +1,8 @@
 # Quy tắc dự án
 
-Phạm vi phiên 2026-11-07: chỉ khởi tạo. Không triển khai booking, thanh toán thật, dữ liệu khách thật hoặc phát hành production.
+Phạm vi hiện hành: nền tảng, Identity và lát Catalog/Fleet theo TASK_BOARD; giới hạn chỉ khởi tạo ngày 07/11 là lịch sử. Không triển khai thanh toán thật, dữ liệu khách thật hoặc phát hành production khi chưa đủ các gate được duyệt.
+
+Nguồn v2.7, quy chuẩn UI/UX và hai bản Stitch hiện ở `docs/important/`. Giữ nguyên nội dung nguồn; ghi quyết định và tiến độ trong tài liệu dẫn xuất.
 
 - Đầu mỗi phiên đọc tài liệu quản lý và nguồn v2.7, kiểm tra git status.
 - Ưu tiên yêu cầu trực tiếp, rồi quyết định đã duyệt; tách đề xuất và OPEN. Không tự gán BR-01…23.

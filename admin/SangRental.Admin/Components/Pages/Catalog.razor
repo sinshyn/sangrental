@@ -1,0 +1,92 @@
+@page "/catalog"
+@attribute [Authorize(Policy = "AdminAccess")]
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.DataProtection
+@using SangRental.Domain.CatalogFleet
+@using SangRental.Infrastructure.Persistence
+@inject SangRentalDbContext Database
+@inject IDataProtectionProvider Protection
+
+<PageTitle>Danh mục xe | SangRental Admin</PageTitle>
+<h1>Danh mục xe</h1>
+<p>Tạo danh mục, hãng và mẫu xe nội bộ. Danh mục và mẫu mới ở trạng thái nháp.</p>
+@if (Unavailable)
+{
+    <p role="alert">Chưa tải được dữ liệu. Vui lòng kiểm tra kết nối hệ thống rồi <a href="/catalog">tải lại</a>.</p>
+    <AccountNotice Error="unavailable" @rendermode="InteractiveServer" />
+}
+else
+{
+    @if (Created) { <AccountNotice Error="catalog-created" @rendermode="InteractiveServer" /> }
+    <div class="catalog-grid">
+        <section aria-labelledby="category-heading">
+            <h2 id="category-heading">Danh mục</h2>
+            <CatalogCreate Kind="category" />
+            <div class="table-scroll"><table><caption>Danh mục — trang @CurrentPage</caption><thead><tr><th>ID</th><th>Mã</th><th>Loại</th><th>Công bố</th></tr></thead><tbody>
+            @foreach (var item in Categories) { <tr><td>@item.Id</td><td>@item.Code</td><td>@item.VehicleFamilyCode</td><td>@item.PublicationStatus</td></tr> }
+            </tbody></table></div>
+            @if (Categories.Count == 0) { <p>Chưa có danh mục trên trang này.</p> }
+        </section>
+        <section aria-labelledby="brand-heading">
+            <h2 id="brand-heading">Hãng xe</h2>
+            <CatalogCreate Kind="brand" />
+            <div class="table-scroll"><table><caption>Hãng xe — trang @CurrentPage</caption><thead><tr><th>ID</th><th>Mã</th><th>Tên hãng</th></tr></thead><tbody>
+            @foreach (var item in Brands) { <tr><td>@item.Id</td><td>@item.Code</td><td>@item.DisplayName</td></tr> }
+            </tbody></table></div>
+            @if (Brands.Count == 0) { <p>Chưa có hãng xe trên trang này.</p> }
+        </section>
+        <section aria-labelledby="model-heading">
+            <h2 id="model-heading">Mẫu xe</h2>
+            <CatalogCreate Kind="model" />
+            <div class="table-scroll"><table><caption>Mẫu xe — trang @CurrentPage</caption><thead><tr><th>ID</th><th>Mã</th><th>Tên mẫu</th><th>Danh mục ID</th><th>Hãng ID</th><th>Công bố</th></tr></thead><tbody>
+            @foreach (var item in Models) { <tr><td>@item.Id</td><td>@item.Code</td><td>@item.CommercialName <a href="@($"/catalog/models/{item.Id}/images")">Quản lý ảnh</a></td><td>@item.VehicleCategoryId</td><td>@item.VehicleBrandId</td><td>@item.PublicationStatus</td></tr> }
+            </tbody></table></div>
+            @if (Models.Count == 0) { <p>Chưa có mẫu xe trên trang này.</p> }
+        </section>
+    </div>
+    <nav class="pagination" aria-label="Phân trang danh mục">
+        @if (CurrentPage > 1) { <a href="@($"/catalog?page={CurrentPage - 1}")">Trang trước</a> }
+        <span>Trang @CurrentPage · Tối đa 50 bản ghi mỗi nhóm</span>
+        @if (HasNext && CurrentPage < 100000) { <a href="@($"/catalog?page={CurrentPage + 1}")">Trang sau</a> }
+    </nav>
+}
+
+@code {
+    [SupplyParameterFromQuery(Name = "page")] public int Page { get; set; } = 1;
+    private int CurrentPage => Math.Clamp(Page, 1, 100000);
+    private bool Unavailable;
+    private bool HasNext;
+    private bool Created;
+    [CascadingParameter] private HttpContext? HttpContext { get; set; }
+    private List<VehicleCategory> Categories = [];
+    private List<VehicleBrand> Brands = [];
+    private List<VehicleModel> Models = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (HttpContext is not null)
+        {
+            HttpContext.Response.Headers.CacheControl = "no-cache, no-store";
+            HttpContext.Response.Headers.Pragma = "no-cache";
+        }
+        if (HttpContext?.Request.Cookies["SangRental.CatalogNotice"] is { } notice)
+        {
+            try { Created = Protection.CreateProtector("CatalogNotice.v1").Unprotect(notice) == "created"; }
+            catch (System.Security.Cryptography.CryptographicException) { }
+            HttpContext.Response.Cookies.Delete("SangRental.CatalogNotice", new CookieOptions { Path = "/catalog", Secure = true });
+        }
+        var skip = (CurrentPage - 1) * 50;
+        try
+        {
+            Categories = await Database.Set<VehicleCategory>().AsNoTracking().OrderBy(x => x.Id).Skip(skip).Take(51).ToListAsync();
+            Brands = await Database.Set<VehicleBrand>().AsNoTracking().OrderBy(x => x.Id).Skip(skip).Take(51).ToListAsync();
+            Models = await Database.Set<VehicleModel>().AsNoTracking().OrderBy(x => x.Id).Skip(skip).Take(51).ToListAsync();
+            HasNext = Categories.Count > 50 || Brands.Count > 50 || Models.Count > 50;
+            Categories = Categories.Take(50).ToList(); Brands = Brands.Take(50).ToList(); Models = Models.Take(50).ToList();
+        }
+        catch (Exception error) when (error is Microsoft.Data.SqlClient.SqlException or InvalidOperationException)
+        {
+            Unavailable = true;
+        }
+    }
+}

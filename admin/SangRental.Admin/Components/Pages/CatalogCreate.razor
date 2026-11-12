@@ -1,0 +1,103 @@
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Antiforgery
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.DataProtection
+@using SangRental.Application.CatalogFleet
+@using SangRental.Infrastructure.Persistence
+@inject CatalogFleetSetupService Setup
+@inject NavigationManager Navigation
+@inject IDataProtectionProvider Protection
+
+<EditForm EditContext="Context" FormName="@($"create-{Kind}")" method="post" OnValidSubmit="SaveAsync" Enhance="false" class="catalog-form">
+    <DataAnnotationsValidator />
+    <label for="@(Kind + "-code")">Mã</label>
+    <InputText id="@(Kind + "-code")" @bind-Value="Draft!.Code" maxlength="64" required pattern="[a-z0-9][a-z0-9_-]{0,63}" aria-describedby="@(Kind + "-code-help")" />
+    <small id="@(Kind + "-code-help")">Chữ thường, số, gạch ngang hoặc gạch dưới; tối đa 64 ký tự.</small>
+    <ValidationMessage For="@(() => Draft!.Code)" />
+    <label for="@(Kind + "-name")">@(Kind == "category" ? "Tên danh mục (tiếng Việt)" : Kind == "brand" ? "Tên hãng" : "Tên thương mại")</label>
+    <InputText id="@(Kind + "-name")" @bind-Value="Draft!.Name" maxlength="160" required />
+    <ValidationMessage For="@(() => Draft!.Name)" />
+    @if (Kind == "category")
+    {
+        <label for="category-family">Loại phương tiện</label>
+        <InputSelect id="category-family" @bind-Value="Draft!.Family"><option value="Motorcycle">Xe máy</option><option value="Car">Ô tô</option></InputSelect>
+        <ValidationMessage For="@(() => Draft!.Family)" />
+    }
+    @if (Kind == "model")
+    {
+        <p class="field-help">Nhập ID danh mục và hãng đang hoạt động từ bảng bên dưới.</p>
+        <label for="model-category">ID danh mục</label>
+        <InputNumber id="model-category" @bind-Value="Draft!.CategoryId" min="1" required />
+        <ValidationMessage For="@(() => Draft!.CategoryId)" />
+        <label for="model-brand">ID hãng</label>
+        <InputNumber id="model-brand" @bind-Value="Draft!.BrandId" min="1" required />
+        <ValidationMessage For="@(() => Draft!.BrandId)" />
+    }
+    <button type="submit">@(Kind == "category" ? "Tạo danh mục nháp" : Kind == "brand" ? "Tạo hãng xe" : "Tạo mẫu xe nháp")</button>
+</EditForm>
+@if (Failed) { <AccountNotice Error="catalog-error" @rendermode="InteractiveServer" /> }
+
+@code {
+    [Parameter, EditorRequired] public string Kind { get; set; } = "category";
+    [SupplyParameterFromForm] private CatalogDraft? Draft { get; set; }
+    [CascadingParameter] private HttpContext? HttpContext { get; set; }
+    private EditContext Context = null!;
+    private ValidationMessageStore Errors = null!;
+    private bool Failed;
+
+    protected override void OnInitialized()
+    {
+        Draft ??= new();
+        // Missing fields are mapped to default(T) on SSR POST; only model forms use parent IDs.
+        if (Kind != "model") { Draft.CategoryId = 1; Draft.BrandId = 1; }
+        Context = new(Draft);
+        Errors = new(Context);
+    }
+
+    private async Task SaveAsync()
+    {
+        // Static SSR submits a fresh HTTP request: cookie validation and AdminAccess run again.
+        if (HttpContext?.Request.IsHttps != true) { Failed = true; return; }
+        Errors.Clear();
+        try
+        {
+            var ct = HttpContext.RequestAborted;
+            if (Kind == "category") await Setup.CreateCategoryAsync(new(Draft!.Code, Draft.Family, Draft.Name), ct);
+            else if (Kind == "brand") await Setup.CreateBrandAsync(new(Draft!.Code, Draft.Name), ct);
+            else if (Kind == "model") await Setup.CreateModelAsync(new(Draft!.CategoryId, Draft.BrandId, Draft.Code, Draft.Name), ct);
+            else throw new InvalidOperationException();
+            HttpContext.Response.Cookies.Append("SangRental.CatalogNotice", Protection.CreateProtector("CatalogNotice.v1").Protect("created"),
+                new CookieOptions { HttpOnly = true, Secure = true, SameSite = SameSiteMode.Strict, Path = "/catalog", MaxAge = TimeSpan.FromMinutes(1) });
+            Navigation.NavigateTo("/catalog", forceLoad: true);
+        }
+        catch (DbUpdateException error) when (error.InnerException is Microsoft.Data.SqlClient.SqlException sql && sql.Number is 2601 or 2627)
+        {
+            Errors.Add(Context.Field(nameof(CatalogDraft.Code)), "Mã đã tồn tại. Vui lòng chọn mã khác.");
+            Context.NotifyValidationStateChanged();
+        }
+        catch (CatalogFleetRuleException)
+        {
+            Errors.Add(Context.Field(nameof(CatalogDraft.CategoryId)), "Kiểm tra lại ID danh mục và hãng còn hoạt động.");
+            Errors.Add(Context.Field(nameof(CatalogDraft.BrandId)), "Kiểm tra lại ID danh mục và hãng còn hoạt động.");
+            Context.NotifyValidationStateChanged();
+        }
+        catch (Exception error) when (error is Microsoft.Data.SqlClient.SqlException or DbUpdateException or InvalidOperationException)
+        {
+            Failed = true;
+        }
+    }
+
+    public sealed class CatalogDraft
+    {
+        [Required(ErrorMessage = "Vui lòng nhập mã."), RegularExpression("^[a-z0-9][a-z0-9_-]{0,63}$", ErrorMessage = "Mã không đúng định dạng.")]
+        public string Code { get; set; } = "";
+        [Required(ErrorMessage = "Vui lòng nhập tên."), StringLength(160, ErrorMessage = "Tên tối đa 160 ký tự.")]
+        public string Name { get; set; } = "";
+        [RegularExpression("^(Motorcycle|Car)$", ErrorMessage = "Loại phương tiện không hợp lệ.")]
+        public string Family { get; set; } = "Motorcycle";
+        [Range(1, long.MaxValue, ErrorMessage = "ID phải lớn hơn 0.")]
+        public long CategoryId { get; set; } = 1;
+        [Range(1, long.MaxValue, ErrorMessage = "ID phải lớn hơn 0.")]
+        public long BrandId { get; set; } = 1;
+    }
+}

@@ -1,0 +1,73 @@
+@page "/fleet/maintenance/{Id:long}"
+@attribute [Authorize(Policy = "AdminAccess")]
+@using Microsoft.EntityFrameworkCore
+@using SangRental.Domain.CatalogFleet
+@using SangRental.Infrastructure.Persistence
+@using SangRental.Admin.Services
+@inject SangRentalDbContext Database
+@inject FleetUiService Feedback
+
+<PageTitle>Bảo trì xe | SangRental Admin</PageTitle>
+<h1>Bảo trì xe</h1>
+@if (Saved) { <AccountNotice Error="catalog-created" @rendermode="InteractiveServer" /> }
+@if (Unavailable) { <p role="alert">Chưa tải được bảo trì. Vui lòng tải lại.</p><AccountNotice Error="catalog-error" @rendermode="InteractiveServer" /> }
+else if (Episode is null) { <p>Không tìm thấy đợt bảo trì.</p> }
+else
+{
+    <a href="@($"/fleet/vehicles/{Episode.PhysicalVehicleId}")">← Chi tiết xe</a>
+    <dl class="fleet-details"><dt>Đợt</dt><dd>#@Episode.Id</dd><dt>Trạng thái</dt><dd>@Episode.StatusCode</dd>
+        <dt>Bắt đầu (giờ Việt Nam)</dt><dd>@FleetUiService.LocalTime(Episode.ScheduledStartUtc)</dd><dt>Lý do</dt><dd>@Episode.Reason</dd>
+        <dt>Đã kết thúc thực tế</dt><dd>@(Episode.ActualEndUtc is { } end ? FleetUiService.LocalTime(end) : "Chưa hoàn tất")</dd></dl>
+    @if (Open)
+    {
+        <section aria-labelledby="add-task"><h2 id="add-task">Thêm việc kiểm tra</h2><FleetForm Kind="add-task" EpisodeId="Id" /></section>
+    }
+    <h2>Checklist</h2>
+    @foreach (var item in Items)
+    {
+        <section class="checklist-card" aria-labelledby="@($"task-title-{item.Id}")">
+            <h3 id="@($"task-title-{item.Id}")">#@item.Id · @item.TitleSnapshotVi</h3>
+            <p>Trạng thái: @item.StatusCode</p>
+            @if (!string.IsNullOrWhiteSpace(item.Note)) { <p>Ghi chú: @item.Note</p> }
+            @if (!string.IsNullOrWhiteSpace(item.SkipReason)) { <p>Lý do bỏ qua: @item.SkipReason</p> }
+            @if (Open) { <FleetForm Kind="task" EpisodeId="Id" ItemId="item.Id" Version="@Convert.ToBase64String(item.RowVersion)" /> }
+        </section>
+    }
+    @if (Items.Count == 0) { <p>Chưa có việc kiểm tra trên trang này.</p> }
+    <nav class="pagination" aria-label="Phân trang checklist">
+        @if (CurrentPage > 1) { <a href="@($"/fleet/maintenance/{Id}?page={CurrentPage - 1}")">Trang trước</a> }
+        <span>Trang @CurrentPage · 50 việc/trang</span>
+        @if (HasNext && CurrentPage < 100000) { <a href="@($"/fleet/maintenance/{Id}?page={CurrentPage + 1}")">Trang sau</a> }
+    </nav>
+    @if (Open)
+    {
+        <section aria-labelledby="release-heading"><h2 id="release-heading">Hoàn tất và kiểm tra xuất xưởng</h2>
+            <p>Chỉ xác nhận khi đã kiểm tra xe thực tế, checklist đã hoàn tất hoặc được bỏ qua có lý do. Backend sẽ kiểm lại toàn bộ checklist và trạng thái khóa xe.</p>
+            <FleetForm Kind="complete" EpisodeId="Id" Version="@Convert.ToBase64String(Episode.RowVersion)" />
+        </section>
+    }
+}
+
+@code {
+    [Parameter] public long Id { get; set; }
+    [SupplyParameterFromQuery(Name = "page")] public int Page { get; set; } = 1;
+    [CascadingParameter] private HttpContext? HttpContext { get; set; }
+    private int CurrentPage => Math.Clamp(Page, 1, 100000);
+    private bool Saved, Unavailable, HasNext;
+    private bool Open => Episode?.StatusCode is "Planned" or "InProgress";
+    private MaintenanceEpisode? Episode;
+    private List<MaintenanceChecklistItem> Items = [];
+    protected override async Task OnInitializedAsync()
+    {
+        if (HttpContext is not null) Saved = Feedback.Consume(HttpContext);
+        try
+        {
+            Episode = await Database.Set<MaintenanceEpisode>().AsNoTracking().SingleOrDefaultAsync(x => x.Id == Id);
+            if (Episode is null) { if (HttpContext is not null) HttpContext.Response.StatusCode = 404; return; }
+            Items = await Database.Set<MaintenanceChecklistItem>().AsNoTracking().Where(x => x.MaintenanceEpisodeId == Id)
+                .OrderBy(x => x.Id).Skip((CurrentPage - 1) * 50).Take(51).ToListAsync();
+            HasNext = Items.Count > 50; Items = Items.Take(50).ToList();
+        }
+        catch (Exception error) when (error is Microsoft.Data.SqlClient.SqlException or InvalidOperationException) { Unavailable = true; }
+    }
+}

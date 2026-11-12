@@ -1,0 +1,58 @@
+@page "/fleet"
+@attribute [Authorize(Policy = "AdminAccess")]
+@using Microsoft.EntityFrameworkCore
+@using SangRental.Domain.CatalogFleet
+@using SangRental.Infrastructure.Persistence
+@inject SangRentalDbContext Database
+@inject SangRental.Admin.Services.FleetUiService Feedback
+
+<PageTitle>Đội xe | SangRental Admin</PageTitle>
+<h1>Đội xe</h1>
+<p>Quản lý xe vật lý nội bộ theo mẫu xe. Trạng thái Ready chưa chứng minh xe còn lịch trống để nhận đặt thuê.</p>
+@if (Saved) { <AccountNotice Error="catalog-created" @rendermode="InteractiveServer" /> }
+@if (Unavailable)
+{
+    <p role="alert">Chưa tải được đội xe. <a href="/fleet">Tải lại</a>.</p>
+    <AccountNotice Error="catalog-error" @rendermode="InteractiveServer" />
+}
+else
+{
+    <section aria-labelledby="new-vehicle"><h2 id="new-vehicle">Thêm xe</h2><FleetForm Kind="vehicle" /></section>
+    <div class="table-scroll"><table><caption>Đội xe — trang @CurrentPage</caption>
+        <thead><tr><th>Mã tài sản</th><th>Mẫu xe</th><th>Hồ sơ</th><th>Vận hành</th><th>Chi tiết</th></tr></thead><tbody>
+        @foreach (var vehicle in Vehicles)
+        {
+            <tr><td>@vehicle.AssetCode</td><td>@vehicle.ModelName (#@vehicle.ModelId)</td><td>@vehicle.Lifecycle</td><td>@vehicle.Status</td><td><a href="@($"/fleet/vehicles/{vehicle.Id}")">Xem xe @vehicle.AssetCode</a></td></tr>
+        }
+        </tbody></table></div>
+    @if (Vehicles.Count == 0) { <p>Chưa có xe trên trang này.</p> }
+    <nav class="pagination" aria-label="Phân trang đội xe">
+        @if (CurrentPage > 1) { <a href="@($"/fleet?page={CurrentPage - 1}")">Trang trước</a> }
+        <span>Trang @CurrentPage · 50 xe/trang</span>
+        @if (HasNext && CurrentPage < 100000) { <a href="@($"/fleet?page={CurrentPage + 1}")">Trang sau</a> }
+    </nav>
+}
+
+@code {
+    [SupplyParameterFromQuery(Name = "page")] public int Page { get; set; } = 1;
+    [CascadingParameter] private HttpContext? HttpContext { get; set; }
+    private int CurrentPage => Math.Clamp(Page, 1, 100000);
+    private bool Saved, Unavailable, HasNext;
+    private List<VehicleRow> Vehicles = [];
+    private sealed record VehicleRow(long Id, long ModelId, string ModelName, string AssetCode, string Lifecycle, string Status);
+    protected override async Task OnInitializedAsync()
+    {
+        if (HttpContext is not null) Saved = Feedback.Consume(HttpContext);
+        try
+        {
+            Vehicles = await (from vehicle in Database.Set<PhysicalVehicle>().AsNoTracking()
+                join model in Database.Set<VehicleModel>() on vehicle.VehicleModelId equals model.Id
+                orderby vehicle.Id descending
+                select new VehicleRow(vehicle.Id, model.Id, model.CommercialName, vehicle.AssetCode, vehicle.RecordLifecycle, vehicle.OperationalStatus))
+                .Skip((CurrentPage - 1) * 50).Take(51).ToListAsync();
+            HasNext = Vehicles.Count > 50;
+            Vehicles = Vehicles.Take(50).ToList();
+        }
+        catch (Exception error) when (error is Microsoft.Data.SqlClient.SqlException or InvalidOperationException) { Unavailable = true; }
+    }
+}

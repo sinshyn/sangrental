@@ -1,0 +1,110 @@
+@page "/fleet/vehicles/{Id:long}"
+@attribute [Authorize(Policy = "AdminAccess")]
+@using Microsoft.EntityFrameworkCore
+@using SangRental.Domain.CatalogFleet
+@using SangRental.Infrastructure.Persistence
+@using SangRental.Admin.Services
+@inject SangRentalDbContext Database
+@inject FleetUiService Feedback
+
+<PageTitle>Chi tiết xe | SangRental Admin</PageTitle>
+<a href="/fleet">← Đội xe</a>
+<h1>Chi tiết xe</h1>
+@if (Saved) { <AccountNotice Error="catalog-created" @rendermode="InteractiveServer" /> }
+@if (Unavailable) { <p role="alert">Chưa tải được xe. Vui lòng tải lại.</p><AccountNotice Error="catalog-error" @rendermode="InteractiveServer" /> }
+else if (Vehicle is null) { <p>Không tìm thấy xe.</p> }
+else
+{
+    <dl class="fleet-details"><dt>Mã tài sản</dt><dd>@Vehicle.AssetCode</dd><dt>Mẫu xe</dt><dd>@ModelName (#@Vehicle.VehicleModelId)</dd>
+        <dt>Hồ sơ / vận hành</dt><dd>@Vehicle.RecordLifecycle / @Vehicle.OperationalStatus</dd><dt>VIN / số khung</dt><dd>@(Vehicle.VinOrChassisNumber ?? "Chưa nhập")</dd>
+        <dt>Màu xe</dt><dd>@(Vehicle.ColorName ?? "Chưa nhập")</dd><dt>Năm sản xuất</dt><dd>@(Vehicle.ManufacturingYear?.ToString() ?? "Chưa nhập")</dd></dl>
+    <details><summary>Sửa hồ sơ xe</summary><FleetForm Kind="profile" VehicleId="Id" InitialVehicle="Vehicle" Version="@Convert.ToBase64String(Vehicle.RowVersion)" /></details>
+    <details><summary>Thêm hoặc đổi biển số</summary><FleetForm Kind="registration" VehicleId="Id" Version="@Convert.ToBase64String(Vehicle.RowVersion)" /></details>
+    <div class="table-scroll"><table><caption>Lịch sử biển số — giờ Việt Nam, trang @CurrentRegistrationPage</caption>
+        <thead><tr><th>Quốc gia</th><th>Biển số</th><th>Từ</th><th>Đến</th><th>Lý do đổi</th></tr></thead><tbody>
+        @foreach (var registration in Registrations)
+        {
+            <tr><td>@registration.RegistrationJurisdictionCode</td><td>@registration.PlateDisplay</td><td>@FleetUiService.LocalTime(registration.ValidFromUtc)</td>
+                <td>@(registration.ValidToUtc is { } to ? FleetUiService.LocalTime(to) : "Hiện hành")</td><td>@registration.ClosureReason</td></tr>
+        }
+        </tbody></table></div>
+    @if (Registrations.Count == 0) { <p>Chưa có biển số trên trang này.</p> }
+    <nav class="pagination" aria-label="Phân trang lịch sử biển số">
+        @if (CurrentRegistrationPage > 1) { <a href="@($"/fleet/vehicles/{Id}?registrationPage={CurrentRegistrationPage - 1}")">Trang trước</a> }
+        <span>Trang @CurrentRegistrationPage · 50 biển/trang</span>
+        @if (HasNextRegistration && CurrentRegistrationPage < 100000) { <a href="@($"/fleet/vehicles/{Id}?registrationPage={CurrentRegistrationPage + 1}")">Trang sau</a> }
+    </nav>
+    @if (Vehicle.RecordLifecycle == "Active")
+    {
+        <section aria-labelledby="schedule-heading"><h2 id="schedule-heading">Lập lịch bảo trì</h2>
+        <p>Giờ Việt Nam (UTC+7). Đợt chưa được hoàn tất vẫn có thể chặn lịch dù đã quá giờ dự kiến.</p>
+        <FleetForm Kind="schedule" VehicleId="Id" /></section>
+    }
+    @if (Vehicle.RecordLifecycle == "Draft")
+    {
+        <section aria-labelledby="activate-heading"><h2 id="activate-heading">Kích hoạt xe nháp</h2>
+            <p>Xe nháp chưa được lập lịch bảo trì. Chỉ kích hoạt sau khi kiểm tra xe đạt yêu cầu.</p>
+            <FleetForm Kind="activate" VehicleId="Id" Version="@Convert.ToBase64String(Vehicle.RowVersion)" />
+        </section>
+    }
+    @if (Vehicle.RecordLifecycle == "Active")
+    {
+        <section aria-labelledby="retire-heading"><h2 id="retire-heading">Ngừng khai thác</h2>
+            <p>Giữ hồ sơ, biển số và toàn bộ lịch sử xe. Các đợt bảo trì vẫn được lưu.</p>
+            <FleetForm Kind="retire" VehicleId="Id" Version="@Convert.ToBase64String(Vehicle.RowVersion)" />
+        </section>
+    }
+    @if (Vehicle.RecordLifecycle == "Retired")
+    {
+        <p>Ngừng khai thác lúc @(Vehicle.RetiredAtUtc is { } retired ? FleetUiService.LocalTime(retired) : "chưa có thời điểm"). Lý do: @Vehicle.RetirementReason</p>
+        <section aria-labelledby="restore-heading"><h2 id="restore-heading">Khôi phục khai thác</h2>
+            <p>Cần kiểm tra đạt; xe đang khóa do mất/tai nạn hoặc còn bảo trì đã đến giờ sẽ bị chặn.</p>
+            <FleetForm Kind="restore" VehicleId="Id" Version="@Convert.ToBase64String(Vehicle.RowVersion)" />
+        </section>
+    }
+    <div class="table-scroll"><table><caption>Lịch bảo trì — trang @CurrentPage · Giờ Việt Nam</caption><thead><tr><th>Bắt đầu</th><th>Kết thúc dự kiến</th><th>Trạng thái</th><th>Checklist</th></tr></thead><tbody>
+    @foreach (var episode in Episodes)
+    {
+        <tr><td>@FleetUiService.LocalTime(episode.ScheduledStartUtc)</td><td>@(episode.ScheduledEndUtc is { } end ? FleetUiService.LocalTime(end) : "Chưa xác định")</td><td>@episode.StatusCode</td><td><a href="@($"/fleet/maintenance/{episode.Id}")">Đợt #@episode.Id</a></td></tr>
+    }
+    </tbody></table></div>
+    @if (Episodes.Count == 0) { <p>Chưa có đợt bảo trì trên trang này.</p> }
+    <nav class="pagination" aria-label="Phân trang bảo trì">
+        @if (CurrentPage > 1) { <a href="@($"/fleet/vehicles/{Id}?page={CurrentPage - 1}")">Trang trước</a> }
+        <span>Trang @CurrentPage</span>
+        @if (HasNext && CurrentPage < 100000) { <a href="@($"/fleet/vehicles/{Id}?page={CurrentPage + 1}")">Trang sau</a> }
+    </nav>
+}
+
+@code {
+    [Parameter] public long Id { get; set; }
+    [SupplyParameterFromQuery(Name = "page")] public int Page { get; set; } = 1;
+    [SupplyParameterFromQuery(Name = "registrationPage")] public int RegistrationPage { get; set; } = 1;
+    [CascadingParameter] private HttpContext? HttpContext { get; set; }
+    private int CurrentPage => Math.Clamp(Page, 1, 100000);
+    private int CurrentRegistrationPage => Math.Clamp(RegistrationPage, 1, 100000);
+    private bool HasNextRegistration;
+    private bool Saved, Unavailable, HasNext;
+    private PhysicalVehicle? Vehicle;
+    private string? ModelName;
+    private List<MaintenanceEpisode> Episodes = [];
+    private List<VehicleRegistration> Registrations = [];
+    protected override async Task OnInitializedAsync()
+    {
+        if (HttpContext is not null) Saved = Feedback.Consume(HttpContext);
+        try
+        {
+            Vehicle = await Database.Set<PhysicalVehicle>().AsNoTracking().SingleOrDefaultAsync(x => x.Id == Id);
+            if (Vehicle is null) { if (HttpContext is not null) HttpContext.Response.StatusCode = 404; return; }
+            ModelName = await Database.Set<VehicleModel>().Where(x => x.Id == Vehicle.VehicleModelId).Select(x => x.CommercialName).SingleAsync();
+            Registrations = await Database.Set<VehicleRegistration>().AsNoTracking().Where(x => x.PhysicalVehicleId == Id)
+                .OrderByDescending(x => x.ValidFromUtc).ThenByDescending(x => x.Id)
+                .Skip((CurrentRegistrationPage - 1) * 50).Take(51).ToListAsync();
+            HasNextRegistration = Registrations.Count > 50; Registrations = Registrations.Take(50).ToList();
+            Episodes = await Database.Set<MaintenanceEpisode>().AsNoTracking().Where(x => x.PhysicalVehicleId == Id)
+                .OrderByDescending(x => x.Id).Skip((CurrentPage - 1) * 50).Take(51).ToListAsync();
+            HasNext = Episodes.Count > 50; Episodes = Episodes.Take(50).ToList();
+        }
+        catch (Exception error) when (error is Microsoft.Data.SqlClient.SqlException or InvalidOperationException) { Unavailable = true; }
+    }
+}

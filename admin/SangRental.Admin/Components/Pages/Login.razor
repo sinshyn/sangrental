@@ -2,5 +2,25 @@
 @attribute [AllowAnonymous]
 <PageTitle>Đăng nhập quản trị | SangRental</PageTitle>
 <h1>Đăng nhập quản trị</h1>
-<p>Hệ thống đang trong giai đoạn khởi tạo. Chưa cấu hình nguồn danh tính và quy trình cấp tài khoản.</p>
-<p>Chức năng đăng nhập chưa được bật. Không có tài khoản hoặc mật khẩu quản trị mặc định.</p>
+<p>Dành cho tài khoản nội bộ đã được cấp quyền. Không có tài khoản hoặc mật khẩu mặc định.</p>
+@if (HttpContext?.Request.IsHttps == true)
+{
+    <form method="post" action="/auth/login" data-enhance="false" class="login-form">
+        <AntiforgeryToken />
+        <label for="username">Tên đăng nhập</label>
+        <input id="username" name="username" autocomplete="username" maxlength="256" required />
+        <label for="password">Mật khẩu</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" maxlength="256" required />
+        <button type="submit">Đăng nhập</button>
+    </form>
+}
+else
+{
+    <p>Vui lòng mở trang bằng HTTPS để đăng nhập an toàn.</p>
+}
+<AccountNotice Error="@Error" @rendermode="InteractiveServer" />
+
+@code {
+    [CascadingParameter] private HttpContext? HttpContext { get; set; }
+    [SupplyParameterFromQuery(Name = "error")] public string? Error { get; set; }
+}

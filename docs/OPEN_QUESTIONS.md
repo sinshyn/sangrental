@@ -30,8 +30,8 @@
 
 | Chủ dự án + vận hành | OPS | Chặn công bố liên hệ/giá/SLA/review chưa xác minh |
 
-| Chủ dự án + kỹ thuật | Identity provider/provisioning/MFA/revocation | Chặn bật đăng nhập quản trị thật |
+| Chủ dự án + kỹ thuật | Identity + SQL + cookie đã duyệt 08/11; provisioning CLI/revocation đã triển khai và test. Còn MFA, recovery, UI cấp quyền và production key management | Không hỏi lại provider; các phần production còn là gate trước go-live |
 
-| Chủ dự án + hạ tầng | SQL local đã kết nối Phase 2; còn tài khoản ít quyền, chứng chỉ production và test DB riêng | Không còn chặn kiểm connection local; migration/schema và integration nghiệp vụ chưa triển khai |
+| Chủ dự án + hạ tầng | SQL local có 16 bảng; SangRentalTestDb đã được duyệt và tạo để kiểm Identity/Catalog. Còn application login ít quyền, chứng chỉ production; migration Identity trên SangRentalDb chờ review riêng | Không cản kiểm thử test DB; chưa được coi là production-ready |
 
 Không mục nào yêu cầu tự chốt để hoàn tất scaffold. Không chọn tỷ lệ hoàn hoặc số ngày lưu giấy tờ.

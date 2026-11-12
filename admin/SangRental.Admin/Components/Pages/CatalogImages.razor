@@ -1,0 +1,129 @@
+@page "/catalog/models/{ModelId:long}/images"
+@attribute [Authorize(Policy = "AdminAccess")]
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.DataProtection
+@using SangRental.Domain.CatalogFleet
+@using SangRental.Infrastructure.Persistence
+@inject SangRentalDbContext Database
+@inject IDataProtectionProvider Protection
+@inject Microsoft.Extensions.Options.IOptions<SangRental.Infrastructure.Media.MediaOptions> MediaSettings
+
+<PageTitle>Ảnh mẫu xe | SangRental Admin</PageTitle>
+<a href="/catalog">← Danh mục</a>
+<h1>Ảnh mẫu xe</h1>
+@if (Saved) { <AccountNotice Error="catalog-created" @rendermode="InteractiveServer" /> }
+@if (SystemError) { <AccountNotice Error="catalog-error" @rendermode="InteractiveServer" /> }
+@if (Message is not null) { <p role="alert">@Message</p> }
+@if (Model is null)
+{
+    <p>Không tìm thấy hoặc chưa tải được mẫu xe.</p>
+}
+else
+{
+    <h2>@Model.CommercialName (#@Model.Id)</h2>
+    <p>Ảnh nội dung được chuyển sang WebP/JPG theo cấu hình. Mỗi lần tải lên tạo ảnh và đường dẫn mới, kể cả cùng tên hoặc cùng nội dung. Không tải CCCD, GPLX, giấy tờ hoặc bằng chứng bàn giao tại đây.</p>
+    <p>Chọn ảnh tĩnh JPEG, PNG, WebP, GIF hoặc BMP. Giới hạn @(MediaSettings.Value.MaxUploadBytes / 1024 / 1024) MiB và @(MediaSettings.Value.MaxPixels / 1_000_000) triệu pixel.</p>
+    <form method="post" action="@Endpoint" enctype="multipart/form-data" class="catalog-form" data-fleet-form="true">
+        <AntiforgeryToken />
+        <input type="hidden" name="ui" value="1" />
+        <label for="catalog-file">Ảnh mẫu xe</label><input id="catalog-file" type="file" name="file" accept="image/jpeg,image/png,image/webp,image/gif,image/bmp" required />
+        <label for="image-source">Nguồn ảnh</label><input id="image-source" type="text" name="source" maxlength="500" required />
+        <label for="image-rights">Căn cứ quyền sử dụng</label><input id="image-rights" type="text" name="rights" maxlength="500" required />
+        <label for="image-alt">Mô tả ảnh tiếng Việt</label><input id="image-alt" type="text" name="altText" maxlength="300" required />
+        <button type="submit">Tải ảnh mới lên</button>
+        <p hidden data-notification-failure role="alert">Chưa tải được hệ thống thông báo. Vui lòng tải lại trang trước khi gửi.</p>
+    </form>
+    <p>Ảnh mới ở trạng thái nháp. Duyệt chỉ khi đã kiểm tra ảnh thực tế và quyền sử dụng. Ảnh chỉ có URL công khai hoạt động khi cả mẫu và danh mục đã được công khai; chức năng xuất bản mẫu vẫn ở lát triển khai sau.</p>
+    @foreach (var image in Images)
+    {
+        <section class="checklist-card" aria-labelledby="@($"image-{image.Id}")">
+            <h3 id="@($"image-{image.Id}")">Ảnh #@image.Id @(image.IsPrimary ? "· Ảnh chính" : "")</h3>
+            <img class="catalog-preview" src="@($"{Endpoint}/{image.Id}/content")" alt="@AltText(image.Id)" width="320" loading="lazy" />
+            <p>@image.Width × @image.Height · @image.MediaType · @image.ApprovalStatus · @(image.IsVisible ? "Hiển thị" : "Ẩn") @(image.RetiredAtUtc is not null ? "· Ngừng sử dụng" : "")</p>
+            <p>Nguồn: @image.SourceReference · Quyền sử dụng: @image.RightsReference</p>
+            @if (image.RetiredAtUtc is null)
+            {
+                @foreach (var action in Actions(image))
+                {
+                    <form method="post" action="@($"{Endpoint}/{image.Id}/{action}")" class="catalog-form" data-fleet-form="true" data-confirm="true">
+                        <AntiforgeryToken /><input type="hidden" name="ui" value="1" />
+                        <input type="hidden" name="rowVersion" value="@Convert.ToBase64String(image.RowVersion)" />
+                        <button type="submit">@Label(action)</button>
+                        <p hidden data-notification-failure role="alert">Chưa tải được hệ thống thông báo. Vui lòng tải lại trang trước khi gửi.</p>
+                    </form>
+                }
+            }
+        </section>
+    }
+    @if (Images.Count == 0) { <p>Chưa có ảnh trên trang này.</p> }
+    <nav class="pagination" aria-label="Phân trang ảnh">
+        @if (CurrentPage > 1) { <a href="@($"?page={CurrentPage - 1}")">Trang trước</a> }
+        <span>Trang @CurrentPage · 50 ảnh/trang</span>
+        @if (HasNext && CurrentPage < 100000) { <a href="@($"?page={CurrentPage + 1}")">Trang sau</a> }
+    </nav>
+}
+
+@code {
+    [Parameter] public long ModelId { get; set; }
+    [SupplyParameterFromQuery(Name = "page")] public int Page { get; set; } = 1;
+    [CascadingParameter] private HttpContext? HttpContext { get; set; }
+    private int CurrentPage => Math.Clamp(Page, 1, 100000);
+    private string Endpoint => $"/api/admin/catalog/models/{ModelId}/images";
+    private VehicleModel? Model;
+    private List<VehicleModelImage> Images = [];
+    private Dictionary<long, string> Descriptions = [];
+    private bool Saved, SystemError, HasNext;
+    private string? Message;
+    private string AltText(long id) => Descriptions.GetValueOrDefault(id, "Ảnh mẫu xe");
+    private static string Label(string action) => action switch { "approve" => "Duyệt ảnh và quyền sử dụng", "primary" => "Chọn làm ảnh chính", "hide" => "Ẩn ảnh", _ => "Ngừng sử dụng ảnh" };
+    private static IEnumerable<string> Actions(VehicleModelImage image)
+    {
+        if (!image.IsVisible || image.ApprovalStatus != "Approved") yield return "approve";
+        if (image.IsVisible && image.ApprovalStatus == "Approved" && !image.IsPrimary) yield return "primary";
+        if (image.IsVisible) yield return "hide";
+        yield return "retire";
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        if (HttpContext is not null)
+        {
+            HttpContext.Response.Headers.CacheControl = "no-cache, no-store";
+            HttpContext.Response.Headers.Pragma = "no-cache";
+            var path = $"/catalog/models/{ModelId}/images";
+            if (HttpContext.Request.Cookies["SangRental.MediaNotice"] is { } value)
+            {
+                HttpContext.Response.Cookies.Delete("SangRental.MediaNotice", new CookieOptions { Path = path, Secure = true });
+                try
+                {
+                    var notice = Protection.CreateProtector("CatalogMediaNotice.v1").Unprotect(value);
+                    Saved = notice == "saved";
+                    Message = notice switch
+                    {
+                        "saved" => null,
+                        "media.too_large" or "media.too_many_pixels" => "Ảnh vượt giới hạn dung lượng hoặc kích thước cho phép.",
+                        "media.invalid_image" or "media.unsupported_format" or "media.extension_mismatch" => "Ảnh hỏng, định dạng chưa hỗ trợ hoặc đuôi file không khớp nội dung.",
+                        "media.animated_content_not_supported" => "Ảnh nội dung động chưa được hỗ trợ. Chọn ảnh tĩnh.",
+                        "concurrency.resource_changed" => "Dữ liệu ảnh đã thay đổi. Kiểm tra lại trước khi gửi lại.",
+                        "request.invalid" or "media.file_required" => "Chọn một ảnh và điền đầy đủ nguồn, quyền sử dụng, mô tả.",
+                        "media.retired" or "media.not_approved" or "media.unchanged" => "Trạng thái ảnh chưa phù hợp thao tác. Tải lại trang để kiểm tra.",
+                        _ => "Chưa thể xử lý ảnh. Vui lòng thử lại sau."
+                    };
+                    SystemError = notice is "media.unavailable" or "media.storage_unavailable";
+                }
+                catch (System.Security.Cryptography.CryptographicException) { }
+            }
+        }
+        try
+        {
+            Model = await Database.Set<VehicleModel>().AsNoTracking().SingleOrDefaultAsync(x => x.Id == ModelId);
+            if (Model is null) { if (HttpContext is not null) HttpContext.Response.StatusCode = 404; return; }
+            Images = await Database.Set<VehicleModelImage>().AsNoTracking().Where(x => x.VehicleModelId == ModelId)
+                .OrderByDescending(x => x.Id).Skip((CurrentPage - 1) * 50).Take(51).ToListAsync();
+            HasNext = Images.Count > 50; Images = Images.Take(50).ToList();
+            var ids = Images.Select(x => x.Id).ToArray();
+            Descriptions = await Database.Set<VehicleModelImageTranslation>().AsNoTracking().Where(x => ids.Contains(x.VehicleModelImageId) && x.Locale == "vi")
+                .ToDictionaryAsync(x => x.VehicleModelImageId, x => x.AltText);
+        }
+        catch (Exception e) when (e is Microsoft.Data.SqlClient.SqlException or InvalidOperationException) { SystemError = true; }
+    }
+}

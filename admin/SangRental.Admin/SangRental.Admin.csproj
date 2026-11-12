@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+    <UserSecretsId>SangRental-Api-development</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup><ProjectReference Include="../../backend/SangRental.Infrastructure/SangRental.Infrastructure.csproj" /></ItemGroup>
 </Project>

@@ -1,0 +1,13 @@
+@inject SangRental.Admin.Services.NotificationService Notifications
+
+@code {
+    [Parameter] public string? Error { get; set; }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+        if (Error == "invalid") await Notifications.Error("authFailed");
+        else if (Error == "unavailable") await Notifications.Error("authUnavailable");
+        else if (Error == "catalog-error") await Notifications.Error("error");
+        else if (Error == "catalog-created") await Notifications.Success("ready");
+    }
+}

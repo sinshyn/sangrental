@@ -1,5 +1,5 @@
 export type Locale = "vi" | "en" | "ko" | "zh-CN" | "ja" | "th";
-export type MessageKey = "ready" | "error" | "warning" | "info" | "confirm" | "loading";
+export type MessageKey = "ready" | "error" | "warning" | "info" | "confirm" | "loading" | "authFailed" | "authUnavailable";
 type Kind = "success" | "error" | "warning" | "info";
 type Dictionary = Record<Locale, Record<MessageKey | "ok" | "cancel", string>>;
 export interface PopupEngine {

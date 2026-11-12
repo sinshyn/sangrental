@@ -1,6 +1,6 @@
 # Design system Coastal Luxury — bổ sung ngày 2026-11-07
 
-Nguồn bắt buộc: [quy chuẩn SweetAlert2 và Font Awesome](SangRental_UIUX_SweetAlert2_FontAwesome_Standard.md). Bổ sung cho Master Prompt/đặc tả v2.7, không thay nội dung nguồn hoặc chính sách nghiệp vụ.
+Nguồn bắt buộc: [quy chuẩn SweetAlert2 và Font Awesome](important/SangRental_UIUX_SweetAlert2_FontAwesome_Standard.md). Bổ sung cho Master Prompt/đặc tả v2.7, không thay nội dung nguồn hoặc chính sách nghiệp vụ.
 
 ## Màu và bố cục
 
@@ -44,5 +44,7 @@ shadcn/ui và Tailwind tiếp tục dành cho form, menu, tooltip, date picker, 
 Không có thông báo payment/refund success trong scaffold. Khi làm module phải phân biệt lỗi mạng/validation/nghiệp vụ/quyền/hệ thống bằng key riêng, và chỉ phát success sau trạng thái backend đáng tin cậy. Popup không thay authentication, authorization, transaction, reconciliation, audit hoặc idempotency. OPEN/CR không đổi.
 
 ## Gate kiểm tra tiếp theo
+
+Lát Admin Fleet dùng form SSR + HTML validation và thông báo qua NotificationService. Module `fleet-forms.js` confirm trước Ready/Skipped/release, loading và khóa submit lặp; hủy không gửi. Lỗi adapter có inline boundary hoạt động khi popup không tải được. Các trường/label/checkbox có tên truy cập, bảng overflow và form stack trên mobile. Native POST vẫn có server validation/CSRF/authorization, không dựa vào JavaScript để bảo vệ nghiệp vụ. 4 tests logic form đã có, browser DOM/focus/screen reader vẫn cần kiểm thật.
 
 Đã có unit test logic và HTTP smoke/assets. Trước màn hình tương tác đầu tiên: browser confirm/cancel/loading/toast, SSR/hydration, keyboard, focus return, screen reader, desktop/mobile, double-submit, offline/timeout, Blazor disconnect và đo bundle/tree shaking. Chưa đánh dấu các gate browser này hoàn thành.
